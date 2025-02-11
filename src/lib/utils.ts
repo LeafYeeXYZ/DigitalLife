@@ -2,7 +2,7 @@ import type { ChatCompletion } from 'openai/resources/index.mjs'
 
 export { speakApiList } from './api/shared/api.speak.ts'
 export { listenApiList } from './api/shared/api.listen.ts'
-export { live2dList } from './api/shared/api.live2d.ts'
+export { live2dList, live2d } from './api/shared/api.live2d.ts'
 export { set, get, save } from './api/web/api.store.ts'
 export { openLink } from './api/web/api.utils.ts'
 

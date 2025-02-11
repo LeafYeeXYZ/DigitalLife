@@ -8,7 +8,7 @@ import { useMemory } from '../../lib/hooks/useMemory.ts'
 import { useChatApi } from '../../lib/hooks/useChatApi.ts'
 import { useListenApi } from '../../lib/hooks/useListenApi.ts'
 import { useSpeakApi } from '../../lib/hooks/useSpeakApi.ts'
-import { useLive2dApi } from '../../lib/hooks/useLive2dApi.ts'
+// import { useLive2dApi } from '../../lib/hooks/useLive2dApi.ts'
 import { useVectorApi } from '../../lib/hooks/useVectorApi.ts'
 import { usePlugins } from '../../lib/hooks/usePlugins.ts'
 
@@ -25,7 +25,7 @@ export function ChatText({ shortTermMemoryRef }: { shortTermMemoryRef: RefObject
   const { vectorApi } = useVectorApi()
   const { speak, addAudioCache } = useSpeakApi()
   const { listen } = useListenApi()
-  const { live2d } = useLive2dApi()
+  // const { live2d } = useLive2dApi()
   const { chatWithMemory, updateMemory, shortTermMemory, setShortTermMemory, selfName, setCurrentSummary, updateCurrentSummary } = useMemory()
   const [recognition, setRecognition] = useState<ReturnType<ListenApi> | null>(null)
 
@@ -65,7 +65,7 @@ export function ChatText({ shortTermMemoryRef }: { shortTermMemoryRef: RefObject
         { role: 'user', content: text, timestamp: time },
       ]
       await setShortTermMemory(input)
-      live2d?.tipsMessage('......', 20000, Date.now())
+      // live2d?.tipsMessage('......', 20000, Date.now())
       const { result, tokens, output: o, think } = await chatWithMemory(
         chat, 
         openaiModelName, 
@@ -98,17 +98,17 @@ export function ChatText({ shortTermMemoryRef }: { shortTermMemoryRef: RefObject
         Promise.resolve({ audio: null })
       flushSync(() => setDisabled(<p className='flex justify-center items-center gap-[0.3rem]'>{selfName}回应中 <LoadingOutlined /></p>))
       let current = ''
-      let staps = ''
+      // let staps = ''
       for (const w of result) {
         current += w
         await setShortTermMemory([...output, { role: 'assistant', content: current, timestamp: time }])
         await sleep(30)
         if (w.match(reg)) {
-          staps = ''
+          // staps = ''
           await sleep(1000) // ChatVoice.tsx 那里会比这里慢一点, 是故意的
         } else {
-          staps += w
-          live2d?.tipsMessage(staps, 10000, Date.now())
+          // staps += w
+          // live2d?.tipsMessage(staps, 10000, Date.now())
         }
       }
       flushSync(() => setDisabled(<p className='flex justify-center items-center gap-[0.3rem]'>等待更新记忆结束 <LoadingOutlined /></p>))

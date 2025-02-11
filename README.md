@@ -40,7 +40,7 @@
 | 语音生成 `TTS` | [`F5 TTS` 服务](https://github.com/jianchang512/f5-tts-api) | 默认服务地址为 `'http://127.0.0.1:5010/api'`, 可在应用内修改 |
 | | [`Fish Speech` 服务](https://speech.fish.audio/zh/inference/#http-api) | 默认服务地址为 `'http://127.0.0.1:8080'`, 可在应用内修改 |
 | 语音输入 `STT` | [Web Speech API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API) | 使用浏览器内置的 `STT` 功能 |
-| 动态形象 | `Live2d` | 使用 <https://github.com/oh-my-live2d/oh-my-live2d> 项目 |
+| 动态形象 | `Live2d` | 使用 <https://github.com/hacxy/l2d> 项目 |
 | 其他 | 天气信息 | 默认关闭, 可在应用内设置[和风天气 API Key](https://dev.qweather.com/)开启 |
 | | 时间信息 | 模型可获知当前设备时间、对话开始时间、首次相遇时间 |
 | | 图片输入 | 🚧 WIP |

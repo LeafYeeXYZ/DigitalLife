@@ -10,7 +10,7 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          'live2d': ['oh-my-live2d'],
+          'live2d': ['l2d'],
           'antd': ['antd', '@ant-design/x', '@ant-design/icons'],
         },
       },

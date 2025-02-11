@@ -1,6 +1,6 @@
 import { useStates } from '../../lib/hooks/useStates.ts'
 import { toBase64 } from '../../lib/utils.ts'
-import { Form, Select, Upload, Button } from 'antd'
+import { Form, Select, Upload, Button, Slider } from 'antd'
 import { FileImageOutlined, UndoOutlined } from '@ant-design/icons'
 import { useLive2dApi } from '../../lib/hooks/useLive2dApi.ts'
 
@@ -9,10 +9,14 @@ export function ConfigLayout() {
   const { 
     setLoadLive2d,
     live2dList,
-    currentLive2d,
+    live2dName,
     setBackground, 
     isFullScreen,
     setIsFullScreen,
+    live2dPositionY,
+    setLive2dPositionY,
+    live2dPositionX,
+    setLive2dPositionX,
   } = useLive2dApi()
   const { 
     messageApi,
@@ -24,9 +28,31 @@ export function ConfigLayout() {
         <Form.Item label='聊天形象'>
           <Select 
             options={live2dList.map((name) => ({ label: name, value: name }))}
-            defaultValue={currentLive2d}
+            defaultValue={live2dName}
             onChange={async (value) => { 
               await setLoadLive2d(value)
+            }}
+          />
+        </Form.Item>
+        <Form.Item label={`模型垂直位置${live2dPositionY === 0 ? '' : ` [${live2dPositionY > 0 ? `向下偏移${live2dPositionY}像素` : `向上偏移${-live2dPositionY}像素`}]`}`}>
+          <Slider 
+            min={-300}
+            max={300}
+            step={5}
+            defaultValue={live2dPositionY}
+            onChange={(value) => { 
+              setLive2dPositionY(value)
+            }}
+          />
+        </Form.Item>
+        <Form.Item label={`模型水平位置${live2dPositionX === 0 ? '' : ` [${live2dPositionX > 0 ? `向右偏移${live2dPositionX}像素` : `向左偏移${-live2dPositionX}像素`}]`}`}>
+          <Slider 
+            min={-600}
+            max={600}
+            step={10}
+            defaultValue={live2dPositionX}
+            onChange={(value) => { 
+              setLive2dPositionX(value)
             }}
           />
         </Form.Item>
