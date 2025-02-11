@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.4.1](https://github.com/LeafYeeXYZ/DigitalLife/compare/v1.4.0...v1.4.1) (2025-02-11)
+
+
+### Features
+
+* 支持 DeepSeek R1 等推理模型 ([f1c2086](https://github.com/LeafYeeXYZ/DigitalLife/commit/f1c2086f14f8dc6dfc021fcff8c6d43dbda7af68))
+
+
+### Bug Fixes
+
+* 修复 DeepSeek 模型解析和请求的问题 ([2133b13](https://github.com/LeafYeeXYZ/DigitalLife/commit/2133b138d78fb1e5a98bf564ce534964e12fdf56))
+
+
+### Improvements
+
+* 继续优化记忆模型架构和效果 ([2d13c9f](https://github.com/LeafYeeXYZ/DigitalLife/commit/2d13c9f871c6ad358bc944fcb0e3433d295e73cf))
+* 优化上下文长度衰减逻辑 ([74dba77](https://github.com/LeafYeeXYZ/DigitalLife/commit/74dba772c3fc93fab92595187c6615bd0f395f6a))
+* 优化上下文长度衰减逻辑 ([680c4a9](https://github.com/LeafYeeXYZ/DigitalLife/commit/680c4a9e4112d8a295ec102ce339fdd2f5c0bf7c))
+* 优化一些样式细节 ([f980db1](https://github.com/LeafYeeXYZ/DigitalLife/commit/f980db1e9487c6ad930af3fda8ef019d338048e5))
+
 ## [1.4.0](https://github.com/LeafYeeXYZ/DigitalLife/compare/v1.3.0...v1.4.0) (2025-01-23)
 
 
