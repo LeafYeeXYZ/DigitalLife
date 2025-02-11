@@ -75,7 +75,7 @@ declare type Plugins = {
 declare type ChatApi = import('openai').OpenAI
 declare type ChatApiTest = () => Promise<boolean>
 
-declare type Live2dApi = import('oh-my-live2d').Oml2dMethods & import('oh-my-live2d').Oml2dEvents & import('oh-my-live2d').Oml2dProperties
+declare type Live2dApi = import('l2d').L2D
 declare type LoadLive2d = (element: HTMLElement) => Live2dApi
 declare type Live2dList = { name: string, api: LoadLive2d }[]
 

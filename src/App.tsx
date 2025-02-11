@@ -192,7 +192,6 @@ export default function App() {
       {env.VITE_DEBUG_COMPONENT ? <Debug /> : undefined}
       {/* Context Holder */}
       {messageElement}
-      <div id='live2d' className='-z-50 w-0 h-0 fixed top-0 left-0'></div>
     </main>
   )
 }

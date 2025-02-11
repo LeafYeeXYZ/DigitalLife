@@ -1,12 +1,12 @@
-import { loadOml2d } from 'oh-my-live2d'
+import { init } from 'l2d'
 
 // 1. 要是实例原生有个 destroy 方法就好了, 现在需要手动移除元素
 // 2. 模型没能定位到 parentElement 上, 且只能也在左下或右下
 // 3. 说话时没有张嘴动画 (引申来说, 希望添加一个运行模型动画的实例方法)
 
-const rabbitBoy: LoadLive2d = (element) => {
-  const live2d = loadOml2d({
-    parentElement: element,
+const rabbitBoy: LoadLive2d = async (element) => {
+  const live2d = init(element)
+  await live2d.loadModel({
     dockedPosition: 'right',
     mobileDisplay: true,
     menus: { disable: true },
