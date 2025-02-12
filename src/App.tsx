@@ -53,15 +53,15 @@ export default function App() {
 
   // 加载看板娘
   useEffect(() => {
+    live2d && live2d.destroy()
     if (isMobile) {
-      live2d?.destroy()
       return
     }
     loadLive2d().then(() => {
       setLive2dOpen(true)
     })
     return () => {
-      live2d?.destroy()
+      live2d && live2d.destroy()
       setLive2dOpen(false)
     }
   // TODO: 待 useEffectEvent 正式发布后使用其替代下面的注释代码
