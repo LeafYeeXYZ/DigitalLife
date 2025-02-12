@@ -54,14 +54,14 @@ export default function App() {
   // 加载看板娘
   useEffect(() => {
     if (isMobile) {
-      live2d?.destroyModel()
+      live2d?.destroy()
       return
     }
     loadLive2d().then(() => {
       setLive2dOpen(true)
     })
     return () => {
-      live2d?.destroyModel()
+      live2d?.destroy()
       setLive2dOpen(false)
     }
   // TODO: 待 useEffectEvent 正式发布后使用其替代下面的注释代码
@@ -126,7 +126,7 @@ export default function App() {
   return (
     <main className='w-dvw h-dvh overflow-hidden'>
       {!isMobile && <div 
-        className='fixed top-1/2 left-0 w-[0.4rem] h-12 z-50 cursor-ew-resize border border-blue-900 rounded-full bg-blue-50 opacity-50 hover:opacity-100' 
+        className='fixed top-1/2 left-0 w-[0.4rem] h-12 z-50 cursor-ew-resize border border-blue-900 rounded-full bg-blue-50 opacity-50 hover:opacity-100 translate-y-[-50%]'
         style={{ marginLeft: `calc(${x}px - 0.25rem)`}} 
         draggable
         // @ts-expect-error 类型提示错误, 运行无问题
