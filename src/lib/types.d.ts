@@ -26,6 +26,8 @@ declare type ArchivedMemory = {
 
 declare type ConfigKeys =
   'default_live2d' |
+  'live2d_position_y' |
+  'live2d_position_x' |
   'default_speak_api' |
   'default_listen_api' |
   'last_used_token' |
@@ -75,9 +77,8 @@ declare type Plugins = {
 declare type ChatApi = import('openai').OpenAI
 declare type ChatApiTest = () => Promise<boolean>
 
-declare type Live2dApi = import('oh-my-live2d').Oml2dMethods & import('oh-my-live2d').Oml2dEvents & import('oh-my-live2d').Oml2dProperties
-declare type LoadLive2d = (element: HTMLElement) => Live2dApi
-declare type Live2dList = { name: string, api: LoadLive2d }[]
+declare type Live2dApi = import('l2d').L2D
+declare type Live2dList = { name: string, load: () => Promise<void> }[]
 
 declare type SpeakApiParams = { fishSpeechEndpoint: string, f5TtsEndpoint: string }
 declare type SpeakApi = (text: string) => Promise<{ audio: Uint8Array }>

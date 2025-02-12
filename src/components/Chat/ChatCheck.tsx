@@ -50,7 +50,6 @@ export function ChatCheck({ setReady, shortTermMemoryRef }: { setReady: (ready: 
             }
             return vec
           },
-          { qWeatherApiKey }
         )
         shortTermMemoryRef.current = []
         await setUsedToken(tokens)

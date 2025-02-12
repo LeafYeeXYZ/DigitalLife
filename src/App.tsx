@@ -41,7 +41,7 @@ export default function App() {
 
   const [messageApi, messageElement] = message.useMessage()
   const { setMessageApi, disabled, forceAllowNav } = useStates()
-  const { loadLive2d, setLive2dApi, background, isFullScreen } = useLive2dApi()
+  const { loadLive2d, setLive2dOpen, background, isFullScreen, live2d, live2dPositionY, live2dPositionX } = useLive2dApi()
   const { selfName } = useMemory()
   const [current, setCurrent] = useState<string>(DEFAULT_PAGE)
   const isMobile = useIsMobile()
@@ -53,15 +53,45 @@ export default function App() {
 
   // 加载看板娘
   useEffect(() => {
-    if (isMobile) return
-    const live2d = loadLive2d(document.getElementById('live2d')!)
-    live2d.stageSlideIn()
-    setLive2dApi(live2d)
-    return () => {
-      document.getElementById('live2d')!.innerHTML = ''
-      setLive2dApi(null)
+    if (isMobile) {
+      live2d?.destroyModel()
+      return
     }
-  }, [loadLive2d, setLive2dApi, isMobile])
+    loadLive2d().then(() => {
+      setLive2dOpen(true)
+    })
+    return () => {
+      live2d?.destroyModel()
+      setLive2dOpen(false)
+    }
+  // TODO: 待 useEffectEvent 正式发布后使用其替代下面的注释代码
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loadLive2d, setLive2dOpen, isMobile])
+
+  // 调整看板娘位置 (Y) [消息框和模型位置都是相对于容器的, 无需单独调整]
+  useEffect(() => {
+    const container = document.getElementById('live2d-container')!
+    if (live2dPositionY >= 0) {
+      container.style.bottom = 'unset'
+      container.style.top = `${live2dPositionY}px`
+    } else {
+      container.style.top = 'unset'
+      container.style.bottom = `${-live2dPositionY}px`
+    }
+    return () => {
+      container.style.top = '0'
+      container.style.bottom = 'unset'
+    }
+  }, [live2dPositionY])
+
+  // 调整看板娘位置 (X) [消息框和模型位置都是相对于容器的, 无需单独调整]
+  useEffect(() => {
+    const container = document.getElementById('live2d-container')!
+    container.style.right = `${-live2dPositionX}px`
+    return () => {
+      container.style.right = '0'
+    }
+  }, [live2dPositionX])
 
   // 加载背景
   useEffect(() => {
@@ -75,12 +105,16 @@ export default function App() {
   const [x, setX] = useState<number>(LEFT_GAP)
   useEffect(() => { 
     const bg = document.getElementById('back-container')!
+    const l2d = document.getElementById('live2d-container')!
     if (isFullScreen) {
       bg.style.width = '100dvw'
+      l2d.style.width = `calc(100dvw - ${x}px)`
     } else if (isMobile) {
       bg.style.width = '0'
+      l2d.style.width = '0'
     } else {
       bg.style.width = `calc(100dvw - ${x}px)` 
+      l2d.style.width = `calc(100dvw - ${x}px)`
     }
   }, [x, isMobile, isFullScreen])
 
@@ -192,7 +226,6 @@ export default function App() {
       {env.VITE_DEBUG_COMPONENT ? <Debug /> : undefined}
       {/* Context Holder */}
       {messageElement}
-      <div id='live2d' className='-z-50 w-0 h-0 fixed top-0 left-0'></div>
     </main>
   )
 }

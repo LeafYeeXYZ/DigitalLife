@@ -31,6 +31,7 @@ export function Debug() {
             await resetAllMemory()
             messageApi?.success('已重置记忆')
           }}
+          disabled
         >
           重置记忆
         </Button>
@@ -48,7 +49,7 @@ export function Debug() {
         </Button>
       </div>}
     >
-      <div className='fixed w-8 h-8 rounded-full border border-yellow-500 bg-yellow-50 top-2 left-2 opacity-50 hover:opacity-100 transition-opacity' />
+      <div className='fixed w-8 h-8 rounded-md border border-blue-500 bg-blue-50 top-2 left-2 opacity-50 hover:opacity-100 transition-opacity' />
     </Popover>
   )
 }
