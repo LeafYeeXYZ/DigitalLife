@@ -17,6 +17,10 @@ type API = {
   live2dPositionY: number
   setLive2dPositionY: (position: number) => void
 
+  showTips: () => void
+  hideTips: (inSeconds?: number) => void
+  setTips: (tips: string) => void
+
   background: string
   setBackground: (background?: string) => Promise<void>
 
@@ -36,6 +40,32 @@ const localLive2dPositionX = await get('live2d_position_x')
 const defaultLive2dPositionX = localLive2dPositionX ? parseInt(localLive2dPositionX) : 0
 
 export const useLive2dApi = create<API>()((setState) => ({
+  showTips: () => {
+    const timer = sessionStorage.getItem('hide-live2d-message-timer')
+    if (timer) {
+      clearTimeout(parseInt(timer))
+      sessionStorage.removeItem('hide-live2d-message-timer')
+    }
+    document.getElementById('live2d-message')!.style.opacity = '0.9'
+  },
+  hideTips: (inSeconds) => {
+    const timer = sessionStorage.getItem('hide-live2d-message-timer')
+    if (timer) {
+      clearTimeout(parseInt(timer))
+      sessionStorage.removeItem('hide-live2d-message-timer')
+    }
+    if (inSeconds) {
+      const timer = setTimeout(() => {
+        document.getElementById('live2d-message')!.style.opacity = '0'
+      }, inSeconds * 1000)
+      sessionStorage.setItem('hide-live2d-message-timer', timer.toString())
+    } else {
+      document.getElementById('live2d-message')!.style.opacity = '0'
+    }
+  },
+  setTips: (tips) => {
+    document.getElementById('live2d-message')!.innerText = tips
+  },
   live2d: null,
   live2dList: live2dList.map(({ name }) => name),
   live2dName: defaultLive2d.name,

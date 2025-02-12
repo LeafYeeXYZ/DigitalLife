@@ -68,7 +68,7 @@ export default function App() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loadLive2d, setLive2dOpen, isMobile])
 
-  // 调整看板娘位置 (Y)
+  // 调整看板娘位置 (Y) [消息框和模型位置都是相对于容器的, 无需单独调整]
   useEffect(() => {
     const container = document.getElementById('live2d-container')!
     if (live2dPositionY >= 0) {
@@ -84,7 +84,7 @@ export default function App() {
     }
   }, [live2dPositionY])
 
-  // 调整看板娘位置 (X)
+  // 调整看板娘位置 (X) [消息框和模型位置都是相对于容器的, 无需单独调整]
   useEffect(() => {
     const container = document.getElementById('live2d-container')!
     container.style.right = `${-live2dPositionX}px`
