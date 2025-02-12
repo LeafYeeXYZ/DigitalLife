@@ -115,6 +115,7 @@ export function ChatVoice({ shortTermMemoryRef }: { shortTermMemoryRef: RefObjec
         await setShortTermMemory([...output, { role: 'assistant', content: current, timestamp: time }])
         await sleep(30)
         if (w.match(reg)) {
+          setTips(steps + w)
           steps = ''
           await sleep(1200)
         } else {

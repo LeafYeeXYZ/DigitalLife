@@ -105,6 +105,7 @@ export function ChatText({ shortTermMemoryRef }: { shortTermMemoryRef: RefObject
         await setShortTermMemory([...output, { role: 'assistant', content: current, timestamp: time }])
         await sleep(30)
         if (w.match(reg)) {
+          setTips(steps + w)
           steps = ''
           await sleep(1000) // ChatVoice.tsx 那里会比这里慢一点, 是故意的
         } else {
