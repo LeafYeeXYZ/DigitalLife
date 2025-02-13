@@ -31,7 +31,7 @@
 
 本项目希望如*流浪地球2* (<https://digitallife.ac.cn>) 那样, 创造一个有自己的情感、记忆的"数字生命". 并在现阶段通过 `Live2d` 技术, 使其有更好的交互效果 (如[Neuro Sama](https://www.bilibili.com/video/BV1Db1WYgESn/?share_source=copy_web&vd_source=f73d7b1cc6b3e028bd1d6a660f91c4f1)). 相比[同类项目](https://github.com/t41372/Open-LLM-VTuber), 本项目使用更为简单 (直接在 <https://being.leafyee.xyz> 即可体验), 且记忆功能更为强大. 
 
-关于长时记忆, 本项目参考了多篇论文, 设计了一个独特而创新的记忆系统. 详见[2 长时记忆](#2-长时记忆).
+关于长时记忆, 本项目参考了多篇论文, 设计了一个独特而创新的记忆系统. 详见[2 长时记忆](#2-长时记忆). 相同的技术还用在了 <https://github.com/LeafYeeXYZ/BenjiMemoryPkg> 中.
 
 | 模块 | 可选项 | 说明 |
 | :---: | :---: | :---: |
