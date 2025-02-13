@@ -1,9 +1,9 @@
 import { init } from 'l2d'
 
-export const live2d = init(document.getElementById('live2d') as HTMLCanvasElement)
+const live2d = init(document.getElementById('live2d') as HTMLCanvasElement)
 
 const rabbitBoy = async () => {
-  await live2d.load({
+  const model = await live2d.create({
     path: '/live2d/rabbit-boy/兔兔【新.model3.json',
     scale: 0.18,
     // motionSync: '/live2d/example.motionsync.json' 
@@ -14,39 +14,39 @@ const rabbitBoy = async () => {
     //   live2d?.speak(audioBuffer)
     // }}
   })
-  return
+  return model
 }
 
 const evilBoy = async () => {
-  await live2d.load({
+  const model = await live2d.create({
     path: '/live2d/evil-boy/no4.新（基础）.model3.json',
     scale: 0.11,
   })
-  return
+  return model
 }
 
 const darkBoy = async () => {
-  await live2d.load({
+  const model = await live2d.create({
     path: '/live2d/dark-boy/紫汐.model3.json',
     scale: 0.09,
   })
-  return
+  return model
 }
 
 const jiniqi = async () => {
-  await live2d.load({
+  const model = await live2d.create({
     path: '/live2d/jiniqi/基尼奇.model3.json',
     scale: 0.08,
   })
-  return
+  return model
 }
 
 const heroBoy = async () => {
-  await live2d.load({
+  const model = await live2d.create({
     path: '/live2d/hero-boy/live1.model3.json',
     scale: 0.09,
   })
-  return
+  return model
 }
 
 export const live2dList: Live2dList = [

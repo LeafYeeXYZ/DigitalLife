@@ -78,7 +78,7 @@ declare type ChatApi = import('openai').OpenAI
 declare type ChatApiTest = () => Promise<boolean>
 
 declare type Live2dApi = import('l2d').L2D
-declare type Live2dList = { name: string, load: () => Promise<void> }[]
+declare type Live2dList = { name: string, load: () => Promise<import('l2d').Model> }[]
 
 declare type SpeakApiParams = { fishSpeechEndpoint: string, f5TtsEndpoint: string }
 declare type SpeakApi = (text: string) => Promise<{ audio: Uint8Array }>

@@ -41,10 +41,29 @@ export default function App() {
 
   const [messageApi, messageElement] = message.useMessage()
   const { setMessageApi, disabled, forceAllowNav } = useStates()
-  const { loadLive2d, setLive2dOpen, background, isFullScreen, live2d, live2dPositionY, live2dPositionX } = useLive2dApi()
-  const { selfName } = useMemory()
+  const { setLive2dOpen, background, isFullScreen, live2dPositionY, live2dPositionX, setTips, showTips, hideTips } = useLive2dApi()
+  const { selfName, userName } = useMemory()
   const [current, setCurrent] = useState<string>(DEFAULT_PAGE)
   const isMobile = useIsMobile()
+
+  // 显示欢迎消息
+  useEffect(() => {
+    if (sessionStorage.getItem('welcome-message-shown') === 'yes') {
+      return
+    }
+    if (isMobile) {
+      return
+    }
+    sessionStorage.setItem('welcome-message-shown', 'yes')
+    const timer = setTimeout(() => {
+      setTips(`${userName}, 我们又见面啦!`)
+      showTips()
+      hideTips(8)
+    }, 1000)
+    return () => {
+      clearTimeout(timer)
+    }
+  }, [userName, setTips, showTips, hideTips, isMobile])
 
   // 加载消息通知
   useEffect(() => {
@@ -53,23 +72,18 @@ export default function App() {
 
   // 加载看板娘
   useEffect(() => {
-    live2d && live2d.destroy()
     if (isMobile) {
       return
     }
-    loadLive2d().then(() => {
-      setLive2dOpen(true)
-    })
+    setLive2dOpen(true)
     return () => {
-      live2d && live2d.destroy()
       setLive2dOpen(false)
     }
-  // TODO: 待 useEffectEvent 正式发布后使用其替代下面的注释代码
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loadLive2d, setLive2dOpen, isMobile])
+  }, [setLive2dOpen, isMobile])
 
-  // 调整看板娘位置 (Y) [消息框和模型位置都是相对于容器的, 无需单独调整]
+  // 调整看板娘位置 (Y)
   useEffect(() => {
+    // 容器位置
     const container = document.getElementById('live2d-container')!
     if (live2dPositionY >= 0) {
       container.style.bottom = 'unset'
@@ -78,13 +92,19 @@ export default function App() {
       container.style.top = 'unset'
       container.style.bottom = `${-live2dPositionY}px`
     }
+    // 对话框位置
+    const message = document.getElementById('live2d-message')!
+    const canvas = document.getElementById('live2d')!
+    const messageTop = canvas.clientHeight * 0.05 + 10
+    message.style.top = `${messageTop}px`
     return () => {
+      message.style.top = '0'
       container.style.top = '0'
       container.style.bottom = 'unset'
     }
   }, [live2dPositionY])
 
-  // 调整看板娘位置 (X) [消息框和模型位置都是相对于容器的, 无需单独调整]
+  // 调整看板娘位置 (X) [消息框和模型X轴位置都是相对于容器的, 无需单独调整]
   useEffect(() => {
     const container = document.getElementById('live2d-container')!
     container.style.right = `${-live2dPositionX}px`
