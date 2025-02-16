@@ -66,11 +66,11 @@ const heroBoy = async () => {
 }
 
 export const live2dList: Live2dList = [
-  { name: '兔兔小叶子', load: rabbitBoy },
-  { name: '狗狗小叶子 (日常版)', load: dogBoyB },
-  { name: '狗狗小叶子 (女仆版)', load: dogBoyA },
-  { name: '恶魔小叶子', load: evilBoy },
-  { name: '紫色小叶子', load: darkBoy },
-  { name: '勇者小叶子', load: heroBoy },
+  { name: '兔兔{name}', load: rabbitBoy },
+  { name: '狗狗{name} (日常版)', load: dogBoyB },
+  { name: '狗狗{name} (女仆版)', load: dogBoyA },
+  { name: '恶魔{name}', load: evilBoy },
+  { name: '紫色{name}', load: darkBoy },
+  { name: '勇者{name}', load: heroBoy },
   { name: '基尼奇', load: jiniqi },
 ]

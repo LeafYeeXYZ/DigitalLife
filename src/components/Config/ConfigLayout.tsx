@@ -1,8 +1,9 @@
-import { useStates } from '../../lib/hooks/useStates.ts'
 import { toBase64 } from '../../lib/utils.ts'
 import { Form, Select, Upload, Button, Slider } from 'antd'
 import { FileImageOutlined, UndoOutlined } from '@ant-design/icons'
+import { useStates } from '../../lib/hooks/useStates.ts'
 import { useLive2dApi } from '../../lib/hooks/useLive2dApi.ts'
+import { useMemory } from '../../lib/hooks/useMemory.ts'
 
 export function ConfigLayout() {
 
@@ -21,13 +22,16 @@ export function ConfigLayout() {
   const { 
     messageApi,
   } = useStates()
+  const {
+    selfName,
+  } = useMemory()
 
   return (
     <div className='w-full bg-white border border-blue-900 rounded-md px-5 pb-0 pt-4 overflow-auto max-h-full'>
       <Form layout='vertical'>
         <Form.Item label='聊天形象'>
           <Select 
-            options={live2dList.map((name) => ({ label: name, value: name }))}
+            options={live2dList.map((name) => ({ label: name.replace('{name}', selfName), value: name }))}
             defaultValue={live2dName}
             onChange={async (value) => { 
               await setLoadLive2d(value)
