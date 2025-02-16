@@ -17,6 +17,22 @@ const rabbitBoy = async () => {
   return model
 }
 
+const dogBoyA = async () => {
+  const model = await live2d.create({
+    path: '/live2d/dog-boy-a/鱼香天天卷版权所有XIAOPmaiddress.model3.json',
+    scale: 0.13,
+  })
+  return model
+}
+
+const dogBoyB = async () => {
+  const model = await live2d.create({
+    path: '/live2d/dog-boy-b/鱼香天天卷版权所有守护灵小狗初始版.model3.json',
+    scale: 0.15,
+  })
+  return model
+}
+
 const evilBoy = async () => {
   const model = await live2d.create({
     path: '/live2d/evil-boy/no4.新（基础）.model3.json',
@@ -50,8 +66,10 @@ const heroBoy = async () => {
 }
 
 export const live2dList: Live2dList = [
-  { name: '恶魔小叶子', load: evilBoy },
   { name: '兔兔小叶子', load: rabbitBoy },
+  { name: '狗狗小叶子 (日常版)', load: dogBoyB },
+  { name: '狗狗小叶子 (女仆版)', load: dogBoyA },
+  { name: '恶魔小叶子', load: evilBoy },
   { name: '紫色小叶子', load: darkBoy },
   { name: '勇者小叶子', load: heroBoy },
   { name: '基尼奇', load: jiniqi },

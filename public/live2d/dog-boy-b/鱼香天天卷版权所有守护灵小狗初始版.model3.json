@@ -1,0 +1,29 @@
+{
+	"Version": 3,
+	"FileReferences": {
+		"Moc": "鱼香天天卷版权所有守护灵小狗初始版.moc3",
+		"Textures": [
+			"鱼香天天卷版权所有守护灵小狗初始版.4096/texture_00.png"
+		],
+		"Physics": "鱼香天天卷版权所有守护灵小狗初始版.physics3.json",
+		"DisplayInfo": "鱼香天天卷版权所有守护灵小狗初始版.cdi3.json"
+	},
+	"Groups": [
+		{
+			"Target": "Parameter",
+			"Name": "LipSync",
+			"Ids": [
+				"ParamMouthForm",
+				"ParamMouthOpenY"
+			]
+		},
+		{
+			"Target": "Parameter",
+			"Name": "EyeBlink",
+			"Ids": [
+				"ParamEyeLOpen",
+				"ParamEyeROpen"
+			]
+		}
+	]
+}

@@ -1,0 +1,29 @@
+{
+	"Version": 3,
+	"FileReferences": {
+		"Moc": "鱼香天天卷版权所有XIAOPmaiddress.moc3",
+		"Textures": [
+			"鱼香天天卷版权所有XIAOPmaiddress.4096/texture_00.png"
+		],
+		"Physics": "鱼香天天卷版权所有XIAOPmaiddress.physics3.json",
+		"DisplayInfo": "鱼香天天卷版权所有XIAOPmaiddress.cdi3.json"
+	},
+	"Groups": [
+		{
+			"Target": "Parameter",
+			"Name": "LipSync",
+			"Ids": [
+				"ParamMouthForm",
+				"ParamMouthOpenY"
+			]
+		},
+		{
+			"Target": "Parameter",
+			"Name": "EyeBlink",
+			"Ids": [
+				"ParamEyeLOpen",
+				"ParamEyeROpen"
+			]
+		}
+	]
+}

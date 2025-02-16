@@ -195,6 +195,7 @@ bun build:web
   - [ ] 将记忆模块独立为一个 TypeScript 和 Python 包
 - [ ] 自主行动和迭代
 - [ ] 允许自定义 LLM 的 `temperature` 和 `top_p` 参数
+- [ ] 允许删除特定的记忆 (日记内容) `这样真的好吗`
 
 ## 6 Live2d 模型版权声明
 
