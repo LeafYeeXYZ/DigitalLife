@@ -1,4 +1,4 @@
-import { parseThink } from '../utils.ts'
+import parseThink from '@leaf/parse-think'
 
 type UpdateSelfInfoParams = {
   chatApi: ChatApi,

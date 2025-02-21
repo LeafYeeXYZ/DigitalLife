@@ -48,6 +48,7 @@
     "@ant-design/icons": "^5.6.1",
     "@ant-design/x": "^1.0.5",
     "@aws-sdk/client-s3": "^3.744.0",
+    "@leaf/parse-think": "npm:@jsr/leaf__parse-think",
     "@tauri-apps/plugin-dialog": "~2.2.0",
     "@tauri-apps/plugin-shell": "~2.2.0",
     "@tauri-apps/plugin-store": "~2.2.0",

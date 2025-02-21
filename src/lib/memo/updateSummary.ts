@@ -1,4 +1,5 @@
-import { getTime, parseThink } from '../utils.ts'
+import { getTime } from '../utils.ts'
+import parseThink from '@leaf/parse-think'
 
 type UpdateSummaryParams = {
   chatApi: ChatApi,

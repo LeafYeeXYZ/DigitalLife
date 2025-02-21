@@ -1,37 +1,8 @@
-import type { ChatCompletion } from 'openai/resources/index.mjs'
-
 export { speakApiList } from './api/shared/api.speak.ts'
 export { listenApiList } from './api/shared/api.listen.ts'
 export { live2dList } from './api/shared/api.live2d.ts'
 export { set, get, save } from './api/web/api.store.ts'
 export { openLink } from './api/web/api.utils.ts'
-
-/**
- * 解析消息中的思考过程
- * @param raw 原始消息
- * @returns 纯消息和思考过程
- */
-export function parseThink(raw: ChatCompletion | string): { content: string, think?: string } {
-  let content: string = ''
-  let think: string | undefined = undefined
-  if (typeof raw !== 'string') {
-    content = raw.choices[0].message.content ?? ''
-    // @ts-expect-error DeepSeek 官方 API 的自定义字段
-    think = raw.choices[0].message.reasoning_content ?? undefined
-  } else {
-    content = raw
-  }
-  if (!content) {
-    throw new Error('解析模型输出时出现错误')
-  }
-  const reg = /<think>[\s\S]*?<\/think>/
-  const match = content.match(reg)
-  if (match) {
-    think = match[0].slice(7, -8).trim()
-    content = content.replace(reg, '').trim()
-  }
-  return { content, think }
-}
 
 export function cosineSimilarity(vec1: number[], vec2: number[]): number {
   if (vec1.length !== vec2.length) {

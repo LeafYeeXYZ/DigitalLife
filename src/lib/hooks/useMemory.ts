@@ -1,10 +1,11 @@
 import { create } from 'zustand'
-import { get, set, save, getTime, uuid, clone, getWeather, cosineSimilarity, parseThink } from '../utils.ts'
+import { get, set, save, getTime, uuid, clone, getWeather, cosineSimilarity } from '../utils.ts'
 import type { ChatCompletionTool } from 'openai/resources/index.mjs'
 import { updateSummary } from '../memo/updateSummary.ts'
 import { updateSelfInfo } from '../memo/updateSelfInfo.ts'
 import { updateUserInfo } from '../memo/updateUserInfo.ts'
 import { createTitle } from '../memo/createTitle.ts'
+import parseThink from '@leaf/parse-think'
 
 const UPDATE_MEMORY_AFTER_HOURS = 8
 const DEFAULT_SELF_NAME = '小叶子'
@@ -210,7 +211,7 @@ export const useMemory = create<Memory>()((setState, getState) => ({
         false
       )
     }
-    const { content: result, think } = parseThink(response)
+    const { content: result, think } = parseThink(response.choices[0].message)
     return { 
       result,
       think,
