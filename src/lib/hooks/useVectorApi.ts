@@ -15,9 +15,12 @@ const DEFAULT_VECTOR_DIMENSION = 512
 const DEFAULT_JINA_ENDPOINT = 'https://api.jina.ai/v1/embeddings'
 
 const localVectorDimension = await get('vector_dimension')
-const defaultVectorDimension = localVectorDimension ? Number(localVectorDimension) : DEFAULT_VECTOR_DIMENSION
-const defaultJinaEndpoint = await get('jina_endpoint') ?? DEFAULT_JINA_ENDPOINT
-const defaultJinaApiKey = await get('jina_api_key') ?? ''
+const defaultVectorDimension = localVectorDimension
+  ? Number(localVectorDimension)
+  : DEFAULT_VECTOR_DIMENSION
+const defaultJinaEndpoint =
+  (await get('jina_endpoint')) ?? DEFAULT_JINA_ENDPOINT
+const defaultJinaApiKey = (await get('jina_api_key')) ?? ''
 
 export const useVectorApi = create<API>()((setState, getState) => ({
   vectorApi: async (text) => {

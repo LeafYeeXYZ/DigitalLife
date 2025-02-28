@@ -16,9 +16,14 @@ type API = {
   usedToken: number // -1 means unknown
   setUsedToken: (token: number | undefined) => Promise<void>
 
-  thinkCache: { timestamp: number, content: string }[]
-  setThinkCache: (value: { timestamp: number, content: string }[]) => Promise<void>
-  addThinkCache: (value: { timestamp: number, content: string }) => Promise<void>
+  thinkCache: { timestamp: number; content: string }[]
+  setThinkCache: (
+    value: { timestamp: number; content: string }[],
+  ) => Promise<void>
+  addThinkCache: (value: {
+    timestamp: number
+    content: string
+  }) => Promise<void>
 }
 
 const DEFAULT_MAX_TOKEN = 8_000
@@ -30,11 +35,20 @@ const localUsedToken = await get('last_used_token')
 const localMaxToken = await get('model_max_tokens')
 const localThinkCache = await get('think_cache')
 const defaultUsedToken = localUsedToken ? Number(localUsedToken) : -1
-const defaultMaxToken = localMaxToken ? Number(localMaxToken) : DEFAULT_MAX_TOKEN
-const defaultOpenaiEndpoint = await get('openai_endpoint') ?? DEFAULT_OPENAI_ENDPOINT
-const defaultOpenaiApiKey = await get('openai_api_key') ?? DEFAULT_OPENAI_API_KEY
-const defaultOpenaiModelName = await get('openai_model_name') ?? DEFAULT_OPENAI_MODEL_NAME
-const defaultChatApi = new OpenAI({ baseURL: defaultOpenaiEndpoint, apiKey: defaultOpenaiApiKey, dangerouslyAllowBrowser: true })
+const defaultMaxToken = localMaxToken
+  ? Number(localMaxToken)
+  : DEFAULT_MAX_TOKEN
+const defaultOpenaiEndpoint =
+  (await get('openai_endpoint')) ?? DEFAULT_OPENAI_ENDPOINT
+const defaultOpenaiApiKey =
+  (await get('openai_api_key')) ?? DEFAULT_OPENAI_API_KEY
+const defaultOpenaiModelName =
+  (await get('openai_model_name')) ?? DEFAULT_OPENAI_MODEL_NAME
+const defaultChatApi = new OpenAI({
+  baseURL: defaultOpenaiEndpoint,
+  apiKey: defaultOpenaiApiKey,
+  dangerouslyAllowBrowser: true,
+})
 
 export const useChatApi = create<API>()((setState, getState) => ({
   thinkCache: localThinkCache ?? [],
@@ -59,7 +73,14 @@ export const useChatApi = create<API>()((setState, getState) => ({
   setOpenaiEndpoint: async (url) => {
     const { openaiApiKey } = getState()
     const v = url || DEFAULT_OPENAI_ENDPOINT
-    setState({ openaiEndpoint: v, chat: new OpenAI({ baseURL: v, apiKey: openaiApiKey, dangerouslyAllowBrowser: true }) })
+    setState({
+      openaiEndpoint: v,
+      chat: new OpenAI({
+        baseURL: v,
+        apiKey: openaiApiKey,
+        dangerouslyAllowBrowser: true,
+      }),
+    })
     await set('openai_endpoint', v)
     sessionStorage.removeItem('openai_chat_test')
     return
@@ -68,7 +89,14 @@ export const useChatApi = create<API>()((setState, getState) => ({
   setOpenaiApiKey: async (key) => {
     const { openaiEndpoint } = getState()
     const v = key || DEFAULT_OPENAI_API_KEY
-    setState({ openaiApiKey: v, chat: new OpenAI({ baseURL: openaiEndpoint, apiKey: v, dangerouslyAllowBrowser: true }) })
+    setState({
+      openaiApiKey: v,
+      chat: new OpenAI({
+        baseURL: openaiEndpoint,
+        apiKey: v,
+        dangerouslyAllowBrowser: true,
+      }),
+    })
     await set('openai_api_key', v)
     sessionStorage.removeItem('openai_chat_test')
     return
@@ -105,5 +133,5 @@ export const useChatApi = create<API>()((setState, getState) => ({
     setState({ maxToken: v })
     await set('model_max_tokens', v.toString())
     return
-  }
+  },
 }))

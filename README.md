@@ -29,24 +29,24 @@
 
 ## 1 项目说明
 
-本项目希望如*流浪地球2* (<https://digitallife.ac.cn>) 那样, 创造一个有自己的情感、记忆的"数字生命". 并在现阶段通过 `Live2d` 技术, 使其有更好的交互效果 (如[Neuro Sama](https://www.bilibili.com/video/BV1Db1WYgESn/?share_source=copy_web&vd_source=f73d7b1cc6b3e028bd1d6a660f91c4f1)). 相比[同类项目](https://github.com/t41372/Open-LLM-VTuber), 本项目使用更为简单 (直接在 <https://being.leafyee.xyz> 即可体验), 且记忆功能更为强大. 
+本项目希望如*流浪地球2* (<https://digitallife.ac.cn>) 那样, 创造一个有自己的情感、记忆的"数字生命". 并在现阶段通过 `Live2d` 技术, 使其有更好的交互效果 (如[Neuro Sama](https://www.bilibili.com/video/BV1Db1WYgESn/?share_source=copy_web&vd_source=f73d7b1cc6b3e028bd1d6a660f91c4f1)). 相比[同类项目](https://github.com/t41372/Open-LLM-VTuber), 本项目使用更为简单 (直接在 <https://being.leafyee.xyz> 即可体验), 且记忆功能更为强大.
 
 关于长时记忆, 本项目参考了多篇论文, 设计了一个独特而创新的记忆系统. 详见[2 长时记忆](#2-长时记忆).
 
-| 模块 | 可选项 | 说明 |
-| :---: | :---: | :---: |
-| 推理模型 | 任意兼容 `OpenAI` 规范的服务 | 默认使用 `ollama`, 可在应用内修改 `Endpoint`、`API Key`、`Model Name` 等 |
-| 嵌入模型 | `jina-embeddings-v3` | 用于记忆提取, 需在应用内设置官方 `API Key` 或自部署 `/server/vector.py`<br />注意: 自部署版本的向量维度暂时只支持 `1024` 维 |
-| 语音生成 `TTS` | [`F5 TTS` 服务](https://github.com/jianchang512/f5-tts-api) | 默认服务地址为 `'http://127.0.0.1:5010/api'`, 可在应用内修改 |
-| | [`Fish Speech` 服务](https://speech.fish.audio/zh/inference/#http-api) | 默认服务地址为 `'http://127.0.0.1:8080'`, 可在应用内修改 |
-| 语音输入 `STT` | [Web Speech API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API) | 使用浏览器内置的 `STT` 功能 |
-| 动态形象 | `Live2d` | 使用 <https://github.com/hacxy/l2d> 项目 |
-| 其他 | 天气信息 | 默认关闭, 可在应用内设置[和风天气 API Key](https://dev.qweather.com/)开启 |
-| | 时间信息 | 模型可获知当前设备时间、对话开始时间、首次相遇时间 |
-| | 图片输入 | 🚧 WIP |
-| | 图片输出 | 🚧 WIP |
-| | 文件输入 | 🚧 WIP, 可能会使用 <https://github.com/microsoft/markitdown> |
-| 记忆云备份 | S3 | 在记忆备份界面填写相关信息即可使用 |
+|      模块      |                                      可选项                                       |                                                            说明                                                             |
+| :------------: | :-------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------: |
+|    推理模型    |                           任意兼容 `OpenAI` 规范的服务                            |                          默认使用 `ollama`, 可在应用内修改 `Endpoint`、`API Key`、`Model Name` 等                           |
+|    嵌入模型    |                               `jina-embeddings-v3`                                | 用于记忆提取, 需在应用内设置官方 `API Key` 或自部署 `/server/vector.py`<br />注意: 自部署版本的向量维度暂时只支持 `1024` 维 |
+| 语音生成 `TTS` |            [`F5 TTS` 服务](https://github.com/jianchang512/f5-tts-api)            |                                默认服务地址为 `'http://127.0.0.1:5010/api'`, 可在应用内修改                                 |
+|                |      [`Fish Speech` 服务](https://speech.fish.audio/zh/inference/#http-api)       |                                  默认服务地址为 `'http://127.0.0.1:8080'`, 可在应用内修改                                   |
+| 语音输入 `STT` | [Web Speech API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API) |                                                 使用浏览器内置的 `STT` 功能                                                 |
+|    动态形象    |                                     `Live2d`                                      |                                          使用 <https://github.com/hacxy/l2d> 项目                                           |
+|      其他      |                                     天气信息                                      |                          默认关闭, 可在应用内设置[和风天气 API Key](https://dev.qweather.com/)开启                          |
+|                |                                     时间信息                                      |                                     模型可获知当前设备时间、对话开始时间、首次相遇时间                                      |
+|                |                                     图片输入                                      |                                                           🚧 WIP                                                            |
+|                |                                     图片输出                                      |                                                           🚧 WIP                                                            |
+|                |                                     文件输入                                      |                                🚧 WIP, 可能会使用 <https://github.com/microsoft/markitdown>                                 |
+|   记忆云备份   |                                        S3                                         |                                             在记忆备份界面填写相关信息即可使用                                              |
 
 > `TTS` 和 `STT` 服务默认关闭, 可在应用内的设置中开启
 
@@ -84,7 +84,7 @@
 
 > 一轮对话内的更新模型
 
-![](./readme/model-within.png) 
+![](./readme/model-within.png)
 
 > 多轮对话间的更新模型
 
@@ -94,8 +94,8 @@
 
 请打开网页 (如果是 Web 端) 或应用 (如果是桌面端), 在右下角找到 `设置`, 选择 `推理服务设置`, 输入 `推理服务地址` (即你所用的大模型提供商的 API 地址), `推理服务密钥` (即你所用的大模型提供商的 API Key), `推理服务模型` (即你需要使用的模型的名称); 之后, 在右下角找到 `设置`, 选择 `嵌入服务设置`, 再在 <https://jina.ai/embeddings/> 获取一个免费的 `API Key`, 填入 `嵌入服务密钥` 即可. 如下图所示.
 
-| 推理服务设置 | 嵌入服务设置 |
-| :---: | :---: |
+|        推理服务设置        |        嵌入服务设置        |
+| :------------------------: | :------------------------: |
 | ![](./readme/config-1.png) | ![](./readme/config-2.png) |
 
 设置后, 回到聊天界面即可开始聊天.
@@ -136,8 +136,8 @@
 
 你可以在 `记忆` -> `名字和自我` 中查看数字生命关于自己和关于你的记忆, 或在 `记忆` -> `日记本` 中查看数字生命的"日记", 即对每次对话的总结和感受. 要导入和导出记忆, 请前往 `记忆` -> `导入和导出`; 如果设置了云存储服务, 你还可以在那里把记忆上传到云端.
 
-| 名字和自我 | 日记本 | 导入和导出 |
-| :---: | :---: | :---: |
+|        名字和自我         |          日记本           |        导入和导出         |
+| :-----------------------: | :-----------------------: | :-----------------------: |
 | ![](./readme/intro-5.png) | ![](./readme/intro-6.png) | ![](./readme/intro-7.png) |
 
 ## 4 开发和部署
@@ -178,8 +178,8 @@ bun build:web
 
 ### 4.3 环境变量
 
-| 环境变量名 | 默认值 | 说明 |
-| :---: | :---: | :---: |
+|       环境变量名       | 默认值  |                说明                |
+| :--------------------: | :-----: | :--------------------------------: |
 | `VITE_DEBUG_COMPONENT` | `'off'` | 仅当设为 `'on'` 时, 会显示调试组件 |
 
 ## 5 待办事项

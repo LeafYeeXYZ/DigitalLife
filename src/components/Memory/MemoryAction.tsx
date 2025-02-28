@@ -3,28 +3,30 @@ import { useMemory } from '../../lib/hooks/useMemory.ts'
 import { useState, useRef } from 'react'
 import { usePlugins } from '../../lib/hooks/usePlugins.ts'
 import { flushSync } from 'react-dom'
-import { Form, Button, Popover, Input, Upload, Popconfirm, Space, Tooltip } from 'antd'
-import { ExportOutlined, DeleteOutlined, ImportOutlined, SaveOutlined, CloudUploadOutlined, CloudDownloadOutlined } from '@ant-design/icons'
+import {
+  Form,
+  Button,
+  Popover,
+  Input,
+  Upload,
+  Popconfirm,
+  Space,
+  Tooltip,
+} from 'antd'
+import {
+  ExportOutlined,
+  DeleteOutlined,
+  ImportOutlined,
+  SaveOutlined,
+  CloudUploadOutlined,
+  CloudDownloadOutlined,
+} from '@ant-design/icons'
 
 export function MemoryAction() {
-
-  const { 
-    resetAllMemory,
-    saveAllMemory,
-    importAllMemory,
-    exportAllMemory,
-  } = useMemory()
-  const {
-    setS3MemoryKey,
-    s3MemoryKey,
-    putToS3,
-    getFromS3,
-  } = usePlugins()
-  const { 
-    messageApi,
-    disabled,
-    setDisabled,
-  } = useStates()
+  const { resetAllMemory, saveAllMemory, importAllMemory, exportAllMemory } =
+    useMemory()
+  const { setS3MemoryKey, s3MemoryKey, putToS3, getFromS3 } = usePlugins()
+  const { messageApi, disabled, setDisabled } = useStates()
 
   const [s3MemoryKeyModified, setS3MemoryKeyModified] = useState(false)
 
@@ -34,19 +36,21 @@ export function MemoryAction() {
 
   return (
     <div className='w-full bg-white border border-blue-900 rounded-md px-5 pb-0 pt-4 overflow-auto max-h-full'>
-      <Form 
+      <Form
         form={form}
-        layout='vertical' 
+        layout='vertical'
         initialValues={{
           s3MemoryKey,
         }}
       >
         <Form.Item label='导出记忆'>
-          <Button 
+          <Button
             block
             icon={<ExportOutlined />}
             onClick={async () => {
-              await saveAllMemory().then((path) => messageApi?.success(`记忆已导出至 ${path}`)).catch(() => {})
+              await saveAllMemory()
+                .then((path) => messageApi?.success(`记忆已导出至 ${path}`))
+                .catch(() => {})
             }}
           >
             导出记忆
@@ -62,19 +66,19 @@ export function MemoryAction() {
                 await importAllMemory(json)
                 messageApi?.success('记忆导入成功')
               } catch (e) {
-                messageApi?.error(`记忆导入失败: ${e instanceof Error ? e.message : e}`)
+                messageApi?.error(
+                  `记忆导入失败: ${e instanceof Error ? e.message : e}`,
+                )
               }
               return false
             }}
           >
-            <Button
-              type='text'
-              block
-              icon={<ImportOutlined />}
-            >
+            <Button type='text' block icon={<ImportOutlined />}>
               导入记忆
             </Button>
-            <p className='text-xs mt-[0.3rem]'>可点击上传或直接拖拽文件到此处</p>
+            <p className='text-xs mt-[0.3rem]'>
+              可点击上传或直接拖拽文件到此处
+            </p>
           </Upload.Dragger>
         </Form.Item>
         <Form.Item label='重置记忆'>
@@ -83,42 +87,40 @@ export function MemoryAction() {
             trigger='click'
             open={openDeleteMemory}
             onOpenChange={setOpenDeleteMemory}
-            content={<>
-              <Input 
-                className='mb-3'
-                placeholder='请输入"删除所有记忆"后点击确定'
-                onChange={(e) => deleteMemoryText.current = e.target.value}
-              />
-              <div className='flex justify-between items-center gap-3'>
-                <Button 
-                  block 
-                  onClick={async () => {
-                    if (deleteMemoryText.current === '删除所有记忆') {
-                      await resetAllMemory()
-                      messageApi?.success('已重置所有记忆')
-                    } else {
-                      messageApi?.error('输入错误')
-                    }
-                    setOpenDeleteMemory(false)
-                  }}
-                >
-                  确定
-                </Button>
-                <Button 
-                  block 
-                  type='primary'
-                  onClick={() => setOpenDeleteMemory(false)}
-                >
-                  取消
-                </Button>
-              </div>
-            </>}
+            content={
+              <>
+                <Input
+                  className='mb-3'
+                  placeholder='请输入"删除所有记忆"后点击确定'
+                  onChange={(e) => (deleteMemoryText.current = e.target.value)}
+                />
+                <div className='flex justify-between items-center gap-3'>
+                  <Button
+                    block
+                    onClick={async () => {
+                      if (deleteMemoryText.current === '删除所有记忆') {
+                        await resetAllMemory()
+                        messageApi?.success('已重置所有记忆')
+                      } else {
+                        messageApi?.error('输入错误')
+                      }
+                      setOpenDeleteMemory(false)
+                    }}
+                  >
+                    确定
+                  </Button>
+                  <Button
+                    block
+                    type='primary'
+                    onClick={() => setOpenDeleteMemory(false)}
+                  >
+                    取消
+                  </Button>
+                </div>
+              </>
+            }
           >
-            <Button 
-              block 
-              danger
-              icon={<DeleteOutlined />}
-            >
+            <Button block danger icon={<DeleteOutlined />}>
               重置所有记忆
             </Button>
           </Popover>
@@ -127,7 +129,7 @@ export function MemoryAction() {
         <Form.Item label='云存储中用于存储记忆的键名'>
           <Space.Compact block>
             <Tooltip title='清除已保存的值' color='blue'>
-              <Button 
+              <Button
                 icon={<DeleteOutlined />}
                 onClick={async () => {
                   await setS3MemoryKey()
@@ -138,7 +140,10 @@ export function MemoryAction() {
               />
             </Tooltip>
             <Form.Item noStyle name='s3MemoryKey'>
-              <Input className='w-full' onChange={() => setS3MemoryKeyModified(true)} />
+              <Input
+                className='w-full'
+                onChange={() => setS3MemoryKeyModified(true)}
+              />
             </Form.Item>
             <Tooltip title='保存修改' color='blue'>
               <Button
@@ -169,7 +174,9 @@ export function MemoryAction() {
                   await putToS3(s3MemoryKey, memory)
                   messageApi?.success(`记忆已上传至 ${s3MemoryKey} 中`)
                 } catch (e) {
-                  messageApi?.error(`记忆上传失败: ${e instanceof Error ? e.message : e}`)
+                  messageApi?.error(
+                    `记忆上传失败: ${e instanceof Error ? e.message : e}`,
+                  )
                 } finally {
                   setDisabled(false)
                 }
@@ -177,9 +184,11 @@ export function MemoryAction() {
               okText='确定'
               cancelText='取消'
             >
-              <Button 
+              <Button
                 block
-                disabled={disabled === '下载记忆中' || disabled === '上传记忆中'}
+                disabled={
+                  disabled === '下载记忆中' || disabled === '上传记忆中'
+                }
                 loading={disabled === '上传记忆中'}
                 icon={<CloudUploadOutlined />}
               >
@@ -199,7 +208,9 @@ export function MemoryAction() {
                   await importAllMemory(memory || '')
                   messageApi?.success(`已从 ${s3MemoryKey} 中导入记忆`)
                 } catch (e) {
-                  messageApi?.error(`记忆下载失败: ${e instanceof Error ? e.message : e}`)
+                  messageApi?.error(
+                    `记忆下载失败: ${e instanceof Error ? e.message : e}`,
+                  )
                 } finally {
                   setDisabled(false)
                 }
@@ -207,9 +218,11 @@ export function MemoryAction() {
               okText='确定'
               cancelText='取消'
             >
-              <Button 
+              <Button
                 block
-                disabled={disabled === '上传记忆中' || disabled === '下载记忆中'}
+                disabled={
+                  disabled === '上传记忆中' || disabled === '下载记忆中'
+                }
                 loading={disabled === '下载记忆中'}
                 icon={<CloudDownloadOutlined />}
               >

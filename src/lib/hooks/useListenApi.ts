@@ -10,7 +10,8 @@ type API = {
 }
 
 const localListenApi = await get('default_listen_api')
-const defaultLoad = listenApiList.find(({ name }) => name === localListenApi) ?? listenApiList[0]
+const defaultLoad =
+  listenApiList.find(({ name }) => name === localListenApi) ?? listenApiList[0]
 const defaultApi = defaultLoad.api && defaultLoad.api(undefined)
 
 export const useListenApi = create<API>()((setState) => ({
@@ -19,11 +20,11 @@ export const useListenApi = create<API>()((setState) => ({
   listenApiList: listenApiList.map(({ name }) => name),
   currentListenApi: defaultLoad.name,
   setListenApi: async (name) => {
-    const item = listenApiList.find(api => api.name === name)
+    const item = listenApiList.find((api) => api.name === name)
     if (item) {
       const api = item.api && item.api(undefined)
-      setState({ 
-        currentListenApi: name, 
+      setState({
+        currentListenApi: name,
         listen: api && api.api,
         testListen: api && api.test,
       })

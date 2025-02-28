@@ -6,7 +6,7 @@ const rabbitBoy = async () => {
   const model = await live2d.create({
     path: '/live2d/rabbit-boy/兔兔【新.model3.json',
     scale: 0.18,
-    // motionSync: '/live2d/example.motionsync.json' 
+    // motionSync: '/live2d/example.motionsync.json'
     // 语音同步嘴形, 需要配合修改 <MessageBox /> / <ChatText /> / <ChatVoice /> 组件, 未来版本可能会支持
     // <MessageBox /> 的使用示例:
     // onClick={async () => {

@@ -8,15 +8,16 @@ import { useVectorApi } from '../../lib/hooks/useVectorApi.ts'
 import { flushSync } from 'react-dom'
 
 import { Form, Button, Input, Space, Tooltip, Popconfirm, Popover } from 'antd'
-import { DeleteOutlined, SaveOutlined, CloudDownloadOutlined, CloudUploadOutlined, InfoCircleOutlined } from '@ant-design/icons'
+import {
+  DeleteOutlined,
+  SaveOutlined,
+  CloudDownloadOutlined,
+  CloudUploadOutlined,
+  InfoCircleOutlined,
+} from '@ant-design/icons'
 
 export function ConfigCloud() {
-
-  const { 
-    messageApi,
-    disabled,
-    setDisabled,
-  } = useStates()
+  const { messageApi, disabled, setDisabled } = useStates()
   const {
     s3Endpoint,
     s3AccessKey,
@@ -31,7 +32,7 @@ export function ConfigCloud() {
     putToS3,
     getFromS3,
   } = usePlugins()
-  const { 
+  const {
     openaiEndpoint,
     openaiApiKey,
     openaiModelName,
@@ -39,18 +40,14 @@ export function ConfigCloud() {
     setOpenaiApiKey,
     setOpenaiModelName,
   } = useChatApi()
-  const { 
+  const {
     fishSpeechEndpoint,
     f5TtsEndpoint,
     setFishSpeechEndpoint,
     setF5TtsEndpoint,
   } = useSpeakApi()
-  const { 
-    jinaApiKey,
-    jinaEndpoint,
-    setJinaApiKey,
-    setJinaEndpoint,
-  } = useVectorApi()
+  const { jinaApiKey, jinaEndpoint, setJinaApiKey, setJinaEndpoint } =
+    useVectorApi()
 
   const [form] = Form.useForm()
   const [s3EndpointModified, setS3EndpointModified] = useState(false)
@@ -61,9 +58,9 @@ export function ConfigCloud() {
 
   return (
     <div className='w-full bg-white border border-blue-900 rounded-md px-5 pb-0 pt-4 overflow-auto max-h-full'>
-      <Form 
+      <Form
         form={form}
-        layout='vertical' 
+        layout='vertical'
         initialValues={{
           s3Endpoint,
           s3AccessKey,
@@ -75,7 +72,7 @@ export function ConfigCloud() {
         <Form.Item label='S3 Endpoint'>
           <Space.Compact block>
             <Tooltip title='清除已保存的值' color='blue'>
-              <Button 
+              <Button
                 icon={<DeleteOutlined />}
                 onClick={async () => {
                   await setS3Endpoint()
@@ -86,7 +83,10 @@ export function ConfigCloud() {
               />
             </Tooltip>
             <Form.Item noStyle name='s3Endpoint'>
-              <Input className='w-full' onChange={() => setS3EndpointModified(true)} />
+              <Input
+                className='w-full'
+                onChange={() => setS3EndpointModified(true)}
+              />
             </Form.Item>
             <Tooltip title='保存修改' color='blue'>
               <Button
@@ -105,7 +105,7 @@ export function ConfigCloud() {
         <Form.Item label='S3 Access Key'>
           <Space.Compact block>
             <Tooltip title='清除已保存的值' color='blue'>
-              <Button 
+              <Button
                 icon={<DeleteOutlined />}
                 onClick={async () => {
                   await setS3AccessKey()
@@ -116,7 +116,10 @@ export function ConfigCloud() {
               />
             </Tooltip>
             <Form.Item noStyle name='s3AccessKey'>
-              <Input.Password className='w-full' onChange={() => setS3AccessKeyModified(true)} />
+              <Input.Password
+                className='w-full'
+                onChange={() => setS3AccessKeyModified(true)}
+              />
             </Form.Item>
             <Tooltip title='保存修改' color='blue'>
               <Button
@@ -135,7 +138,7 @@ export function ConfigCloud() {
         <Form.Item label='S3 Secret Key'>
           <Space.Compact block>
             <Tooltip title='清除已保存的值' color='blue'>
-              <Button 
+              <Button
                 icon={<DeleteOutlined />}
                 onClick={async () => {
                   await setS3SecretKey()
@@ -146,7 +149,10 @@ export function ConfigCloud() {
               />
             </Tooltip>
             <Form.Item noStyle name='s3SecretKey'>
-              <Input.Password className='w-full' onChange={() => setS3SecretKeyModified(true)} />
+              <Input.Password
+                className='w-full'
+                onChange={() => setS3SecretKeyModified(true)}
+              />
             </Form.Item>
             <Tooltip title='保存修改' color='blue'>
               <Button
@@ -165,7 +171,7 @@ export function ConfigCloud() {
         <Form.Item label='S3 Bucket Name'>
           <Space.Compact block>
             <Tooltip title='清除已保存的值' color='blue'>
-              <Button 
+              <Button
                 icon={<DeleteOutlined />}
                 onClick={async () => {
                   await setS3BucketName()
@@ -176,7 +182,10 @@ export function ConfigCloud() {
               />
             </Tooltip>
             <Form.Item noStyle name='s3BucketName'>
-              <Input className='w-full' onChange={() => setS3BucketNameModified(true)} />
+              <Input
+                className='w-full'
+                onChange={() => setS3BucketNameModified(true)}
+              />
             </Form.Item>
             <Tooltip title='保存修改' color='blue'>
               <Button
@@ -193,16 +202,26 @@ export function ConfigCloud() {
           </Space.Compact>
         </Form.Item>
         <hr className='border-t border-blue-900 mb-4' />
-        <Form.Item label={<span className='text-gray-500'>
-          云存储中用于存储设置的键名<Popover content={(
-            <div>
-              仅会存储: 推理服务地址、密钥、模型; 嵌入服务地址、密钥; 语音生成服务地址
-            </div>
-          )}><InfoCircleOutlined className='ml-[0.3rem]' /></Popover>
-        </span>}>
+        <Form.Item
+          label={
+            <span className='text-gray-500'>
+              云存储中用于存储设置的键名
+              <Popover
+                content={
+                  <div>
+                    仅会存储: 推理服务地址、密钥、模型; 嵌入服务地址、密钥;
+                    语音生成服务地址
+                  </div>
+                }
+              >
+                <InfoCircleOutlined className='ml-[0.3rem]' />
+              </Popover>
+            </span>
+          }
+        >
           <Space.Compact block>
             <Tooltip title='清除已保存的值' color='blue'>
-              <Button 
+              <Button
                 icon={<DeleteOutlined />}
                 onClick={async () => {
                   await setS3ConfigKey()
@@ -213,7 +232,10 @@ export function ConfigCloud() {
               />
             </Tooltip>
             <Form.Item noStyle name='s3ConfigKey'>
-              <Input className='w-full' onChange={() => setS3ConfigKeyModified(true)} />
+              <Input
+                className='w-full'
+                onChange={() => setS3ConfigKeyModified(true)}
+              />
             </Form.Item>
             <Tooltip title='保存修改' color='blue'>
               <Button
@@ -252,7 +274,9 @@ export function ConfigCloud() {
                   await putToS3(s3ConfigKey, config)
                   messageApi?.success(`配置已上传至 ${s3ConfigKey} 中`)
                 } catch (e) {
-                  messageApi?.error(`配置上传失败: ${e instanceof Error ? e.message : e}`)
+                  messageApi?.error(
+                    `配置上传失败: ${e instanceof Error ? e.message : e}`,
+                  )
                 } finally {
                   setDisabled(false)
                 }
@@ -260,9 +284,11 @@ export function ConfigCloud() {
               okText='确定'
               cancelText='取消'
             >
-              <Button 
+              <Button
                 block
-                disabled={disabled === '下载配置中' || disabled === '上传配置中'}
+                disabled={
+                  disabled === '下载配置中' || disabled === '上传配置中'
+                }
                 loading={disabled === '上传配置中'}
                 icon={<CloudUploadOutlined />}
               >
@@ -282,14 +308,18 @@ export function ConfigCloud() {
                   const data = JSON.parse(config || '{}')
                   data.openaiEndpoint && setOpenaiEndpoint(data.openaiEndpoint)
                   data.openaiApiKey && setOpenaiApiKey(data.openaiApiKey)
-                  data.openaiModelName && setOpenaiModelName(data.openaiModelName)
-                  data.fishSpeechEndpoint && setFishSpeechEndpoint(data.fishSpeechEndpoint)
+                  data.openaiModelName &&
+                    setOpenaiModelName(data.openaiModelName)
+                  data.fishSpeechEndpoint &&
+                    setFishSpeechEndpoint(data.fishSpeechEndpoint)
                   data.f5TtsEndpoint && setF5TtsEndpoint(data.f5TtsEndpoint)
                   data.jinaApiKey && setJinaApiKey(data.jinaApiKey)
                   data.jinaEndpoint && setJinaEndpoint(data.jinaEndpoint)
                   messageApi?.success(`已从 ${s3ConfigKey} 中导入配置`)
                 } catch (e) {
-                  messageApi?.error(`配置下载失败: ${e instanceof Error ? e.message : e}`)
+                  messageApi?.error(
+                    `配置下载失败: ${e instanceof Error ? e.message : e}`,
+                  )
                 } finally {
                   setDisabled(false)
                 }
@@ -297,9 +327,11 @@ export function ConfigCloud() {
               okText='确定'
               cancelText='取消'
             >
-              <Button 
+              <Button
                 block
-                disabled={disabled === '上传配置中' || disabled === '下载配置中'}
+                disabled={
+                  disabled === '上传配置中' || disabled === '下载配置中'
+                }
                 loading={disabled === '下载配置中'}
                 icon={<CloudDownloadOutlined />}
               >

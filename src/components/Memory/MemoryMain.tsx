@@ -4,8 +4,7 @@ import { Form, Button, Input, Space, Popconfirm } from 'antd'
 import { useState } from 'react'
 
 export function MemoryMain() {
-
-  const { 
+  const {
     userName,
     selfName,
     setUserName,
@@ -20,9 +19,9 @@ export function MemoryMain() {
 
   return (
     <div className='w-full bg-white border border-blue-900 rounded-md px-5 pb-0 pt-4 overflow-auto max-h-full'>
-      <Form 
+      <Form
         form={form}
-        layout='vertical' 
+        layout='vertical'
         initialValues={{
           userName,
           selfName,
@@ -31,21 +30,29 @@ export function MemoryMain() {
         <Form.Item label='你和他的名字'>
           <Space.Compact block>
             <Form.Item noStyle name='userName'>
-              <Input 
+              <Input
                 addonBefore='你叫'
                 placeholder='请输入'
                 onChange={() => setNameModified(true)}
               />
             </Form.Item>
             <Form.Item noStyle name='selfName'>
-              <Input 
+              <Input
                 addonBefore='他叫'
                 placeholder='请输入'
                 onChange={() => setNameModified(true)}
               />
             </Form.Item>
             <Popconfirm
-              title={<span>名字是你们之间的重要记忆<br />强烈建议不要中途轻易修改<br />您确定要修改吗？</span>}
+              title={
+                <span>
+                  名字是你们之间的重要记忆
+                  <br />
+                  强烈建议不要中途轻易修改
+                  <br />
+                  您确定要修改吗？
+                </span>
+              }
               onConfirm={async () => {
                 await setUserName(form.getFieldValue('userName'))
                 await setSelfName(form.getFieldValue('selfName'))

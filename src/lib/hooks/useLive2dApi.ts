@@ -30,14 +30,19 @@ type API = {
 
 const DAFAULT_BACKGROUND = '/back.png'
 
-const background = await get('background_image') || DAFAULT_BACKGROUND
+const background = (await get('background_image')) || DAFAULT_BACKGROUND
 const localLive2d = await get('default_live2d')
-const defaultLive2d = live2dList.find(({ name }) => name === localLive2d) ?? live2dList[0]
-const localIsFullScreen = await get('is_full_screen') === 'true'
+const defaultLive2d =
+  live2dList.find(({ name }) => name === localLive2d) ?? live2dList[0]
+const localIsFullScreen = (await get('is_full_screen')) === 'true'
 const localLive2dPositionY = await get('live2d_position_y')
-const defaultLive2dPositionY = localLive2dPositionY ? parseInt(localLive2dPositionY) : 0
+const defaultLive2dPositionY = localLive2dPositionY
+  ? parseInt(localLive2dPositionY)
+  : 0
 const localLive2dPositionX = await get('live2d_position_x')
-const defaultLive2dPositionX = localLive2dPositionX ? parseInt(localLive2dPositionX) : 0
+const defaultLive2dPositionX = localLive2dPositionX
+  ? parseInt(localLive2dPositionX)
+  : 0
 
 export const useLive2dApi = create<API>()((setState, getState) => ({
   live2d: null,
@@ -59,7 +64,7 @@ export const useLive2dApi = create<API>()((setState, getState) => ({
   _loadLive2d: defaultLive2d.load,
   setLoadLive2d: async (name) => {
     const { live2dOpen, live2d } = getState()
-    const item = live2dList.find(api => api.name === name)
+    const item = live2dList.find((api) => api.name === name)
     if (!item) {
       throw new Error('Live2d model not found')
     }

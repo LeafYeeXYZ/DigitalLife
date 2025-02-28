@@ -1,8 +1,12 @@
 import { create } from 'zustand'
 import { set, get, getWeather } from '../utils.ts'
-import { S3Client, GetObjectCommand, PutObjectCommand } from '@aws-sdk/client-s3'
+import {
+  S3Client,
+  GetObjectCommand,
+  PutObjectCommand,
+} from '@aws-sdk/client-s3'
 
-type API = { 
+type API = {
   setQWeatherApiKey: (apiKey?: string) => Promise<void>
   testQWeatherApiKey: () => Promise<boolean>
 
@@ -16,13 +20,13 @@ type API = {
   putToS3: (key: string, value: string) => Promise<void>
 } & Plugins
 
-const qWeatherApiKey = await get('qweather_api_key') || ''
-const s3Endpoint = await get('s3_endpoint') || ''
-const s3AccessKey = await get('s3_access_key') || ''
-const s3SecretKey = await get('s3_secret_key') || ''
-const s3BucketName = await get('s3_bucket_name') || ''
-const s3MemoryKey = await get('s3_memory_key') || ''
-const s3ConfigKey = await get('s3_config_key') || ''
+const qWeatherApiKey = (await get('qweather_api_key')) || ''
+const s3Endpoint = (await get('s3_endpoint')) || ''
+const s3AccessKey = (await get('s3_access_key')) || ''
+const s3SecretKey = (await get('s3_secret_key')) || ''
+const s3BucketName = (await get('s3_bucket_name')) || ''
+const s3MemoryKey = (await get('s3_memory_key')) || ''
+const s3ConfigKey = (await get('s3_config_key')) || ''
 
 export const usePlugins = create<API>()((setState, getState) => ({
   s3Endpoint,

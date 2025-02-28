@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint ./src",
+    "format": "prettier . --write",
     "preview": "vite preview",
     "tauri": "tauri",
     "release:create": "commit-and-tag-version",
