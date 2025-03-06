@@ -21,9 +21,8 @@
     - [4.1 桌面端](#41-桌面端)
     - [4.2 Web 端](#42-web-端)
     - [4.3 环境变量](#43-环境变量)
-  - [5 待办事项](#5-待办事项)
-  - [6 Live2d 模型版权声明](#6-live2d-模型版权声明)
-  - [7 参考文献](#7-参考文献)
+  - [5 Live2d 模型版权声明](#5-live2d-模型版权声明)
+  - [6 参考文献](#6-参考文献)
 
 > **临时引用信息**: `叶一杉. (2025). DigitalLife: 具有长时记忆和自我概念的"数字生命". https://github.com/LeafYeeXYZ/DigitalLife`
 
@@ -182,26 +181,11 @@ bun build:web
 | :--------------------: | :-----: | :--------------------------------: |
 | `VITE_DEBUG_COMPONENT` | `'off'` | 仅当设为 `'on'` 时, 会显示调试组件 |
 
-## 5 待办事项
-
-- [ ] 软件图标
-- [ ] 黑暗模式, 包括 `index.html`
-- 记忆功能
-  - [x] 当前对话递归总结
-  - [x] 保存为长时记忆
-  - [x] 可以自行提取记忆
-  - [x] 在新的回忆中过滤已经回忆过的记忆
-  - [x] 讨论是否需要把总结用另一个模型完成, 从而避免上下文较长时, 模型无法返回正确的 JSON 字符串; 此时记忆提取可以用函数调用完成
-  - [ ] 将记忆模块独立为一个 TypeScript 和 Python 包
-- [ ] 自主行动和迭代
-- [ ] 允许自定义 LLM 的 `temperature` 和 `top_p` 参数
-- [ ] 允许删除特定的记忆 (日记内容) `这样真的好吗`
-
-## 6 Live2d 模型版权声明
+## 5 Live2d 模型版权声明
 
 本项目内的所有模型皆为在 B 站发布的免费模型, 请勿直接复制使用, 如有需要可至原地址获取
 
-## 7 参考文献
+## 6 参考文献
 
 - Hou, Y., Tamoto, H., & Miyashita, H. (2024). “My agent understands me better”: Integrating Dynamic Human-like Memory Recall and Consolidation in LLM-Based Agents. Extended Abstracts of the CHI Conference on Human Factors in Computing Systems, 1–7. https://doi.org/10.1145/3613905.3650839
 - Lee, K.-H., Chen, X., Furuta, H., Canny, J., & Fischer, I. (2024). A Human-Inspired Reading Agent with Gist Memory of Very Long Contexts (arXiv:2402.09727). arXiv. https://doi.org/10.48550/arXiv.2402.09727
