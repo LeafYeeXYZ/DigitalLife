@@ -1,11 +1,14 @@
 import { useMemory } from '../../lib/hooks/useMemory.ts'
 import { useVectorApi } from '../../lib/hooks/useVectorApi.ts'
-import { Collapse, Tag, Tooltip } from 'antd'
+import { useStates } from '../../lib/hooks/useStates.ts'
+import { Collapse, Tag, Tooltip, Button, Popconfirm } from 'antd'
 import { getTime } from '../../lib/utils.ts'
+import { DeleteOutlined } from '@ant-design/icons'
 
 export function MemoryDiary() {
-  const { longTermMemory, selfName } = useMemory()
+  const { longTermMemory, selfName, deleteLongTermMemory } = useMemory()
   const { vectorDimension } = useVectorApi()
+  const { messageApi } = useStates()
 
   return (
     <div className='w-full bg-white max-h-full border border-blue-900 rounded-md overflow-auto transition-all'>
@@ -49,6 +52,25 @@ export function MemoryDiary() {
                       </div>
                       <div>
                         结束时间: <Tag>{getTime(item.endTime)}</Tag>
+                      </div>
+                      <div className='my-1'>
+                        <Popconfirm
+                          title='确认删除本条记忆吗?'
+                          onConfirm={async () => {
+                            await deleteLongTermMemory(item.uuid)
+                            messageApi?.success('已删除本条记忆')
+                          }}
+                          okText='确认'
+                          cancelText='取消'
+                        >
+                          <Button
+                            block
+                            icon={<DeleteOutlined />}
+                            danger
+                          >
+                            删除本条记忆
+                          </Button>
+                        </Popconfirm>
                       </div>
                     </div>
                   ),

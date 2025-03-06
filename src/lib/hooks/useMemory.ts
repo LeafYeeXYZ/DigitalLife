@@ -68,6 +68,7 @@ type Memory = {
   setMemoryAboutSelf: (content: string) => Promise<void>
   setMemoryAboutUser: (content: string) => Promise<void>
   setLongTermMemory: (memory: LongTermMemory[]) => Promise<void>
+  deleteLongTermMemory: (uuid: string) => Promise<void>
   setShortTermMemory: (memory: ShortTermMemory[]) => Promise<void>
   setArchivedMemory: (memory: ArchivedMemory[]) => Promise<void>
   // 记忆更新 (短时记忆 -> 长时记忆, 并递归更新自我概念)
@@ -513,6 +514,17 @@ export const useMemory = create<Memory>()((setState, getState) => ({
   longTermMemory: localLongTermMemory || [],
   shortTermMemory: localShortTermMemory || [],
   archivedMemory: localArchivedMemory || [],
+  deleteLongTermMemory: async (uuid) => {
+    const { longTermMemory, archivedMemory } = getState()
+    const newLongTermMemory = longTermMemory.filter((item) => item.uuid !== uuid)
+    const newArchivedMemory = archivedMemory.filter(
+      (item) => item.belongTo !== uuid,
+    )
+    setState({ longTermMemory: newLongTermMemory, archivedMemory: newArchivedMemory })
+    await set('long_term_memory', newLongTermMemory)
+    await set('archived_memory', newArchivedMemory)
+    return
+  },
   setSelfName: async (name) => {
     const v = name || DEFAULT_SELF_NAME
     setState({ selfName: v })

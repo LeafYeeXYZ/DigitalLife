@@ -174,12 +174,12 @@ export default function App() {
           className='fixed top-1/2 left-0 w-[0.4rem] h-12 z-50 cursor-ew-resize border border-blue-900 rounded-full bg-blue-50 opacity-50 hover:opacity-100 translate-y-[-50%]'
           style={{ marginLeft: `calc(${x}px - 0.25rem)` }}
           draggable
-          // @ts-expect-error 类型提示错误, 运行无问题
           onDragStart={(e) => {
+            // @ts-expect-error 类型提示错误, 运行无问题
             e.target.style.opacity = '0'
           }}
-          // @ts-expect-error 类型提示错误, 运行无问题
           onDragEnd={(e) => {
+            // @ts-expect-error 类型提示错误, 运行无问题
             e.target.style.opacity = '1'
           }}
           onDrag={(e) => {
