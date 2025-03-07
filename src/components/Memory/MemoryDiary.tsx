@@ -55,7 +55,13 @@ export function MemoryDiary() {
                       </div>
                       <div className='my-1'>
                         <Popconfirm
-                          title='确认删除本条记忆吗?'
+                          title={
+                            <span>
+                              是否确认删除本条记忆?
+                              <br />
+                              已更新的用户画像和自我概念不会受到影响
+                            </span>
+                          }
                           onConfirm={async () => {
                             await deleteLongTermMemory(item.uuid)
                             messageApi?.success('已删除本条记忆')
