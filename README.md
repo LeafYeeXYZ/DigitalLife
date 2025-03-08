@@ -24,7 +24,7 @@
   - [5 Live2d 模型版权声明](#5-live2d-模型版权声明)
   - [6 参考文献](#6-参考文献)
 
-> **临时引用信息**: `叶一杉. (2025). DigitalLife: 具有长时记忆和自我概念的"数字生命". https://github.com/LeafYeeXYZ/DigitalLife`
+> `v1.4.0 引用信息`: `叶一杉. (2025). DigitalLife: 具有长时记忆和自我概念的AI虚拟人 (v1.4.0) [Computer software]. GitHub. https://github.com/LeafYeeXYZ/DigitalLife/tree/v1.4.0`
 
 ## 1 项目说明
 
