@@ -75,19 +75,37 @@
 
 ### 2.2 本项目设计
 
-作者认为人工智能将可能是人类文明的下一形态, 未来的人类将可以通过脑机接口等技术与 AI 深度集成, 乃至最后融合. 因此, 对未来的"数字生命", 我仍为它应当是**源于人类而在某些方面超越人类**的. 因此, 它的记忆机制将参考人脑设计, 但在记忆的遗忘等方面可以有所差异; 即可以有比人类更持久的记忆, 而不特意采用以前的做法中的遗忘机制. 同时, 作者希望将 AI 拥有"自我概念"和"用户画像" (类似于 MemoryBank (Zhong et al., 2023)), 从而提升 AI 在多轮对话间回答的一致性, 以及让 AI **拥有"灵魂" (通过自我概念) 和"爱" (通过用户画像)**.
+长时记忆模块的要解决的核心问题包括：**单次对话内AI回复的连贯性**、**多次对话间AI回复的连贯性**、**充分利用指定的有限上下文**. 
 
-基于以上考虑, 本项目的记忆模型设计为: 让当前上下文中包含"自我概念"、"用户画像"、本轮对话内容 ("短时记忆")、递归生成的当次对话总结 (类似于 Wang et al., 2024)、以及其他固定和外部信息, 并让模型按需提取过往的"长时记忆"; 提取的方式是模型函数调用; 通过将模型的描述与长时记忆进行向量距离计算, 找到最相关的记忆, 并将其输入给模型.
+对于**单次对话内AI回复的连贯性**问题, 本项目设计了一个"对话内递归总结"机制 (类似于 Wang et al., 2024)：用户每次输入后, AI模型除生成回复外, 还需要生成/更新一个"对话内总结"；该总结将包含本次对话的主要内容和重要信息, 并将在每次AI模型生成回复前加入到它的上下文中. 如下图所示：
 
-"长时记忆"更新的时机为连续数小时 (当前默认为八小时) 无新增对话后, 或用户主动要求更新记忆时. 在更新记忆时, 也会递归更新"自我概念"和"用户画像".
+> "对话内总结"更新机制示意图
 
-> 一轮对话内的更新模型
+![](./readme/model-1.png)
+ 
+对于**多次对话间AI回复的连贯性**问题, 本项目设计了"用户画像"、"自我概念"和"记忆检索"机制：在每次对话结束后, AI模型将基于本次对话的总结（即最后一轮对话后生成的"对话内总结"）, 生成/更新使用者的"用户画像" (包含用户的信息、遇到的困扰、便好的对话方式等, 类似于 Zhong et al., 2023) 和自身的"自我概念" (即AI模型对自己的认知, 在与用户的对话中学到的知识等). "用户画像"和"自我概念"的更新如下图所示：
 
-![](./readme/model-within.png)
+> "用户画像"和"自我概念"更新机制示意图
 
-> 多轮对话间的更新模型
+![](./readme/model-2.png)
+ 
+最后一轮对话后生成的"对话内总结"除了用于更新"用户画像"和"自我概念"外, 还将被词嵌入模型向量化后存入用户专属的记忆库. 在用户的对话过程中, 当AI接收到用户输入时, 可以选择通过 Function Calling 调取记忆, 并给出想要调取的记忆的文字描述；系统将先把AI给出的描述同样进行向量化, 之后在记忆库中找出相关性最高的数条记忆并返回给AI模型；AI模型得到记忆后, 生成对用户的回复. 加入了记忆提取的对话流程如下图所示：
 
-![](./readme/model-between.png)
+> 记忆提取机制示意图
+
+![](./readme/model-3.png)
+ 
+对于**充分利用指定的有限上下文**问题, 本项目设计了一个"滑动窗口"机制：对于给定的最大 Tokens 数值, 系统会根据每次AI模型推理后所用的 Tokens 总量, 动态调整下一次输入给AI的历史消息长度；同时"用户画像"、"自我概念"、"对话内总结"等内容将无视此限制, 始终提供给AI, 从而保证了良好的对话效果和连贯性. 
+
+当前判断"一次对话结束"的标准为: 用户主动结束对话, 或连续数小时 (当前默认为八小时) 无新增对话. 综上所述, 一次对话内和多次对话间的处理逻辑如下图所示：
+ 
+> 一次对话内的处理逻辑示意图
+
+![](./readme/model-4.png)
+
+> 多次对话间的处理逻辑示意图
+
+![](./readme/model-5.png)
 
 ## 3 使用说明
 
@@ -187,7 +205,7 @@ bun build:web
 
 ## 6 参考文献
 
-- Hou, Y., Tamoto, H., & Miyashita, H. (2024). “My agent understands me better”: Integrating Dynamic Human-like Memory Recall and Consolidation in LLM-Based Agents. Extended Abstracts of the CHI Conference on Human Factors in Computing Systems, 1–7. https://doi.org/10.1145/3613905.3650839
+- Hou, Y., Tamoto, H., & Miyashita, H. (2024). "My agent understands me better": Integrating Dynamic Human-like Memory Recall and Consolidation in LLM-Based Agents. Extended Abstracts of the CHI Conference on Human Factors in Computing Systems, 1–7. https://doi.org/10.1145/3613905.3650839
 - Lee, K.-H., Chen, X., Furuta, H., Canny, J., & Fischer, I. (2024). A Human-Inspired Reading Agent with Gist Memory of Very Long Contexts (arXiv:2402.09727). arXiv. https://doi.org/10.48550/arXiv.2402.09727
 - Packer, C., Wooders, S., Lin, K., Fang, V., Patil, S. G., Stoica, I., & Gonzalez, J. E. (2024). MemGPT: Towards LLMs as Operating Systems (arXiv:2310.08560). arXiv. https://doi.org/10.48550/arXiv.2310.08560
 - Wang, Q., Ding, L., Cao, Y., Tian, Z., Wang, S., Tao, D., & Guo, L. (2024). Recursively Summarizing Enables Long-Term Dialogue Memory in Large Language Models (arXiv:2308.15022). arXiv. https://doi.org/10.48550/arXiv.2308.15022
