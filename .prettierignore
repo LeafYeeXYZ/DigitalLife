@@ -1,8 +1,0 @@
-# Ignore artifacts:
-node_modules
-public
-dist
-src-tauri
-server
-scripts
-dist-web

@@ -1,14 +1,14 @@
 import { useSyncExternalStore } from 'react'
 
 export function useIsMobile() {
-  return useSyncExternalStore(subscribe, getSnapshot)
+	return useSyncExternalStore(subscribe, getSnapshot)
 }
 
 function subscribe(callback: () => void) {
-  window.addEventListener('resize', callback)
-  return () => window.removeEventListener('resize', callback)
+	window.addEventListener('resize', callback)
+	return () => window.removeEventListener('resize', callback)
 }
 
 function getSnapshot() {
-  return window.innerWidth < 800
+	return window.innerWidth < 800
 }
