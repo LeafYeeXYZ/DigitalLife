@@ -4,15 +4,13 @@ import { useMemory } from '../../lib/hooks/useMemory.ts'
 import { useStates } from '../../lib/hooks/useStates.ts'
 
 export function MemoryMain() {
-	const {
-		userName,
-		selfName,
-		setUserName,
-		setSelfName,
-		memoryAboutSelf,
-		memoryAboutUser,
-	} = useMemory()
-	const { messageApi } = useStates()
+	const userName = useMemory((state) => state.userName)
+	const selfName = useMemory((state) => state.selfName)
+	const setUserName = useMemory((state) => state.setUserName)
+	const setSelfName = useMemory((state) => state.setSelfName)
+	const memoryAboutSelf = useMemory((state) => state.memoryAboutSelf)
+	const memoryAboutUser = useMemory((state) => state.memoryAboutUser)
+	const messageApi = useStates((state) => state.messageApi)
 
 	const [form] = Form.useForm()
 	const [nameModified, setNameModified] = useState(false)

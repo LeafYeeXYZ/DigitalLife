@@ -6,9 +6,11 @@ import { useVectorApi } from '../../lib/hooks/useVectorApi.ts'
 import { getTime } from '../../lib/utils.ts'
 
 export function MemoryDiary() {
-	const { longTermMemory, selfName, deleteLongTermMemory } = useMemory()
-	const { vectorDimension } = useVectorApi()
-	const { messageApi } = useStates()
+	const longTermMemory = useMemory((state) => state.longTermMemory)
+	const selfName = useMemory((state) => state.selfName)
+	const deleteLongTermMemory = useMemory((state) => state.deleteLongTermMemory)
+	const vectorDimension = useVectorApi((state) => state.vectorDimension)
+	const messageApi = useStates((state) => state.messageApi)
 
 	return (
 		<div className='w-full bg-white max-h-full border border-blue-900 rounded-md overflow-auto transition-all'>

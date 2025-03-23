@@ -20,9 +20,11 @@ import { getDate, uuid } from '../../lib/utils.ts'
 const md = markdownit({ html: true, breaks: true })
 
 export function MessageBox() {
-	const { shortTermMemory } = useMemory()
-	const { audiosCache, setAudiosCache } = useSpeakApi()
-	const { thinkCache, setThinkCache } = useChatApi()
+	const shortTermMemory = useMemory((state) => state.shortTermMemory)
+	const audiosCache = useSpeakApi((state) => state.audiosCache)
+	const setAudiosCache = useSpeakApi((state) => state.setAudiosCache)
+	const thinkCache = useChatApi((state) => state.thinkCache)
+	const setThinkCache = useChatApi((state) => state.setThinkCache)
 
 	const memoryList = useMemo(() => {
 		const memo = shortTermMemory.filter((item) => !item.tool_calls)
@@ -72,8 +74,10 @@ function BubbleX({
 	audio?: Uint8Array
 	think?: string
 }) {
-	const { userName, selfName, longTermMemory } = useMemory()
-	const { messageApi } = useStates()
+	const userName = useMemory((state) => state.userName)
+	const selfName = useMemory((state) => state.selfName)
+	const longTermMemory = useMemory((state) => state.longTermMemory)
+	const messageApi = useStates((state) => state.messageApi)
 	const [playing, setPlaying] = useState(false)
 	const audioRef = useRef<HTMLAudioElement | null>(null)
 

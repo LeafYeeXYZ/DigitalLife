@@ -17,13 +17,27 @@ export function ChatCheck({
 	setReady: (ready: boolean) => void
 	shortTermMemoryRef: RefObject<ShortTermMemory[]>
 }) {
-	const { setDisabled, disabled, setForceAllowNav, messageApi } = useStates()
-	const { qWeatherApiKey, testQWeatherApiKey } = usePlugins()
-	const { testChat, chat, openaiModelName, setUsedToken } = useChatApi()
-	const { vectorApi } = useVectorApi()
-	const { testListen } = useListenApi()
-	const { testSpeak } = useSpeakApi()
-	const { shouldUpdateMemory, updateMemory } = useMemory()
+	const setDisabled = useStates((state) => state.setDisabled)
+	const disabled = useStates((state) => state.disabled)
+	const setForceAllowNav = useStates((state) => state.setForceAllowNav)
+	const messageApi = useStates((state) => state.messageApi)
+
+	const qWeatherApiKey = usePlugins((state) => state.qWeatherApiKey)
+	const testQWeatherApiKey = usePlugins((state) => state.testQWeatherApiKey)
+
+	const testChat = useChatApi((state) => state.testChat)
+	const chat = useChatApi((state) => state.chat)
+	const openaiModelName = useChatApi((state) => state.openaiModelName)
+	const setUsedToken = useChatApi((state) => state.setUsedToken)
+
+	const vectorApi = useVectorApi((state) => state.vectorApi)
+
+	const testListen = useListenApi((state) => state.testListen)
+
+	const testSpeak = useSpeakApi((state) => state.testSpeak)
+
+	const shouldUpdateMemory = useMemory((state) => state.shouldUpdateMemory)
+	const updateMemory = useMemory((state) => state.updateMemory)
 	const [statusText, setStatusText] = useState<string>('加载中')
 	const [statusError, setStatusError] = useState<boolean>(false)
 

@@ -3,14 +3,12 @@ import { useMemory } from '../lib/hooks/useMemory.ts'
 import { useStates } from '../lib/hooks/useStates.ts'
 
 export function Debug() {
-	const {
-		currentSummary,
-		resetAllMemory,
-		archivedMemory,
-		shortTermMemory,
-		setShortTermMemory,
-	} = useMemory()
-	const { messageApi } = useStates()
+	const currentSummary = useMemory((state) => state.currentSummary)
+	const resetAllMemory = useMemory((state) => state.resetAllMemory)
+	const archivedMemory = useMemory((state) => state.archivedMemory)
+	const shortTermMemory = useMemory((state) => state.shortTermMemory)
+	const setShortTermMemory = useMemory((state) => state.setShortTermMemory)
+	const messageApi = useStates((state) => state.messageApi)
 
 	return (
 		<Popover

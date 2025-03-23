@@ -6,20 +6,18 @@ import { useStates } from '../../lib/hooks/useStates.ts'
 import { toBase64 } from '../../lib/utils.ts'
 
 export function ConfigLayout() {
-	const {
-		setLoadLive2d,
-		live2dList,
-		live2dName,
-		setBackground,
-		isFullScreen,
-		setIsFullScreen,
-		live2dPositionY,
-		setLive2dPositionY,
-		live2dPositionX,
-		setLive2dPositionX,
-	} = useLive2dApi()
-	const { messageApi } = useStates()
-	const { selfName } = useMemory()
+	const setLoadLive2d = useLive2dApi((state) => state.setLoadLive2d)
+	const live2dList = useLive2dApi((state) => state.live2dList)
+	const live2dName = useLive2dApi((state) => state.live2dName)
+	const setBackground = useLive2dApi((state) => state.setBackground)
+	const isFullScreen = useLive2dApi((state) => state.isFullScreen)
+	const setIsFullScreen = useLive2dApi((state) => state.setIsFullScreen)
+	const live2dPositionY = useLive2dApi((state) => state.live2dPositionY)
+	const setLive2dPositionY = useLive2dApi((state) => state.setLive2dPositionY)
+	const live2dPositionX = useLive2dApi((state) => state.live2dPositionX)
+	const setLive2dPositionX = useLive2dApi((state) => state.setLive2dPositionX)
+	const messageApi = useStates((state) => state.messageApi)
+	const selfName = useMemory((state) => state.selfName)
 
 	return (
 		<div className='w-full bg-white border border-blue-900 rounded-md px-5 pb-0 pt-4 overflow-auto max-h-full'>

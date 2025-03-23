@@ -10,18 +10,20 @@ import { useSpeakApi } from '../../lib/hooks/useSpeakApi.ts'
 import { useStates } from '../../lib/hooks/useStates.ts'
 
 export function ConfigVoice() {
-	const {
-		setSpeakApi,
-		speakApiList,
-		currentSpeakApi,
-		f5TtsEndpoint,
-		fishSpeechEndpoint,
-		setF5TtsEndpoint,
-		setFishSpeechEndpoint,
-	} = useSpeakApi()
-	const { setListenApi, listenApiList, currentListenApi } = useListenApi()
+	const setSpeakApi = useSpeakApi((state) => state.setSpeakApi)
+	const speakApiList = useSpeakApi((state) => state.speakApiList)
+	const currentSpeakApi = useSpeakApi((state) => state.currentSpeakApi)
+	const f5TtsEndpoint = useSpeakApi((state) => state.f5TtsEndpoint)
+	const fishSpeechEndpoint = useSpeakApi((state) => state.fishSpeechEndpoint)
+	const setF5TtsEndpoint = useSpeakApi((state) => state.setF5TtsEndpoint)
+	const setFishSpeechEndpoint = useSpeakApi(
+		(state) => state.setFishSpeechEndpoint,
+	)
+	const setListenApi = useListenApi((state) => state.setListenApi)
+	const listenApiList = useListenApi((state) => state.listenApiList)
+	const currentListenApi = useListenApi((state) => state.currentListenApi)
+	const messageApi = useStates((state) => state.messageApi)
 	const [form] = Form.useForm()
-	const { messageApi } = useStates()
 	const [f5TtsEndpointModified, setF5TtsEndpointModified] = useState(false)
 	const [fishSpeechEndpointModified, setFishSpeechEndpointModified] =
 		useState(false)

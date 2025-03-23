@@ -7,17 +7,18 @@ import { useVectorApi } from '../../lib/hooks/useVectorApi.ts'
 import { clone } from '../../lib/utils.ts'
 
 export function ConfigVector() {
-	const {
-		jinaApiKey,
-		jinaEndpoint,
-		vectorDimension,
-		setJinaApiKey,
-		setJinaEndpoint,
-		setVectorDimension,
-		vectorApi,
-	} = useVectorApi()
-	const { longTermMemory, setLongTermMemory } = useMemory()
-	const { messageApi, disabled, setDisabled } = useStates()
+	const jinaApiKey = useVectorApi((state) => state.jinaApiKey)
+	const jinaEndpoint = useVectorApi((state) => state.jinaEndpoint)
+	const vectorDimension = useVectorApi((state) => state.vectorDimension)
+	const setJinaApiKey = useVectorApi((state) => state.setJinaApiKey)
+	const setJinaEndpoint = useVectorApi((state) => state.setJinaEndpoint)
+	const setVectorDimension = useVectorApi((state) => state.setVectorDimension)
+	const vectorApi = useVectorApi((state) => state.vectorApi)
+	const longTermMemory = useMemory((state) => state.longTermMemory)
+	const setLongTermMemory = useMemory((state) => state.setLongTermMemory)
+	const messageApi = useStates((state) => state.messageApi)
+	const disabled = useStates((state) => state.disabled)
+	const setDisabled = useStates((state) => state.setDisabled)
 	const [form] = Form.useForm()
 	const [jinaApiKeyModified, setJinaApiKeyModified] = useState(false)
 	const [jinaEndpointModified, setJinaEndpointModified] = useState(false)

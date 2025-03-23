@@ -23,10 +23,19 @@ import { usePlugins } from '../../lib/hooks/usePlugins.ts'
 import { useStates } from '../../lib/hooks/useStates.ts'
 
 export function MemoryAction() {
-	const { resetAllMemory, saveAllMemory, importAllMemory, exportAllMemory } =
-		useMemory()
-	const { setS3MemoryKey, s3MemoryKey, putToS3, getFromS3 } = usePlugins()
-	const { messageApi, disabled, setDisabled } = useStates()
+	const resetAllMemory = useMemory((state) => state.resetAllMemory)
+	const saveAllMemory = useMemory((state) => state.saveAllMemory)
+	const importAllMemory = useMemory((state) => state.importAllMemory)
+	const exportAllMemory = useMemory((state) => state.exportAllMemory)
+
+	const setS3MemoryKey = usePlugins((state) => state.setS3MemoryKey)
+	const s3MemoryKey = usePlugins((state) => state.s3MemoryKey)
+	const putToS3 = usePlugins((state) => state.putToS3)
+	const getFromS3 = usePlugins((state) => state.getFromS3)
+
+	const messageApi = useStates((state) => state.messageApi)
+	const disabled = useStates((state) => state.disabled)
+	const setDisabled = useStates((state) => state.setDisabled)
 
 	const [s3MemoryKeyModified, setS3MemoryKeyModified] = useState(false)
 

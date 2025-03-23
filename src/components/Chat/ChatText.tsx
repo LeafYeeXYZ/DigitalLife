@@ -27,29 +27,37 @@ export function ChatText({
 }: {
 	shortTermMemoryRef: RefObject<ShortTermMemory[]>
 }) {
-	const { disabled, setDisabled, messageApi } = useStates()
-	const { qWeatherApiKey } = usePlugins()
-	const {
-		chat,
-		usedToken,
-		setUsedToken,
-		openaiModelName,
-		maxToken,
-		addThinkCache,
-	} = useChatApi()
-	const { vectorApi } = useVectorApi()
-	const { speak, addAudioCache } = useSpeakApi()
-	const { listen } = useListenApi()
-	const { showTips, hideTips, setTips } = useLive2dApi()
-	const {
-		chatWithMemory,
-		updateMemory,
-		shortTermMemory,
-		setShortTermMemory,
-		selfName,
-		setCurrentSummary,
-		updateCurrentSummary,
-	} = useMemory()
+	const disabled = useStates((state) => state.disabled)
+	const setDisabled = useStates((state) => state.setDisabled)
+	const messageApi = useStates((state) => state.messageApi)
+
+	const qWeatherApiKey = usePlugins((state) => state.qWeatherApiKey)
+
+	const chat = useChatApi((state) => state.chat)
+	const usedToken = useChatApi((state) => state.usedToken)
+	const setUsedToken = useChatApi((state) => state.setUsedToken)
+	const openaiModelName = useChatApi((state) => state.openaiModelName)
+	const maxToken = useChatApi((state) => state.maxToken)
+	const addThinkCache = useChatApi((state) => state.addThinkCache)
+
+	const vectorApi = useVectorApi((state) => state.vectorApi)
+
+	const speak = useSpeakApi((state) => state.speak)
+	const addAudioCache = useSpeakApi((state) => state.addAudioCache)
+
+	const listen = useListenApi((state) => state.listen)
+
+	const showTips = useLive2dApi((state) => state.showTips)
+	const hideTips = useLive2dApi((state) => state.hideTips)
+	const setTips = useLive2dApi((state) => state.setTips)
+
+	const chatWithMemory = useMemory((state) => state.chatWithMemory)
+	const updateMemory = useMemory((state) => state.updateMemory)
+	const shortTermMemory = useMemory((state) => state.shortTermMemory)
+	const setShortTermMemory = useMemory((state) => state.setShortTermMemory)
+	const selfName = useMemory((state) => state.selfName)
+	const setCurrentSummary = useMemory((state) => state.setCurrentSummary)
+	const updateCurrentSummary = useMemory((state) => state.updateCurrentSummary)
 	const [recognition, setRecognition] = useState<ReturnType<ListenApi> | null>(
 		null,
 	)

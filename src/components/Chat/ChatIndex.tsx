@@ -6,7 +6,7 @@ import { ChatVoice } from './ChatVoice.tsx'
 
 export function ChatIndex({ to }: { to: 'text' | 'voice' }) {
 	const [ready, setReady] = useState<boolean>(false)
-	const { shortTermMemory } = useMemory()
+	const shortTermMemory = useMemory((state) => state.shortTermMemory)
 	const shortTermMemoryRef = useRef<ShortTermMemory[]>(shortTermMemory)
 
 	return (

@@ -5,17 +5,15 @@ import { useChatApi } from '../../lib/hooks/useChatApi.ts'
 import { useStates } from '../../lib/hooks/useStates.ts'
 
 export function ConfigMain() {
-	const {
-		openaiEndpoint,
-		openaiApiKey,
-		openaiModelName,
-		maxToken,
-		setOpenaiEndpoint,
-		setOpenaiApiKey,
-		setOpenaiModelName,
-		setMaxToken,
-	} = useChatApi()
-	const { messageApi } = useStates()
+	const openaiEndpoint = useChatApi((state) => state.openaiEndpoint)
+	const openaiApiKey = useChatApi((state) => state.openaiApiKey)
+	const openaiModelName = useChatApi((state) => state.openaiModelName)
+	const maxToken = useChatApi((state) => state.maxToken)
+	const setOpenaiEndpoint = useChatApi((state) => state.setOpenaiEndpoint)
+	const setOpenaiApiKey = useChatApi((state) => state.setOpenaiApiKey)
+	const setOpenaiModelName = useChatApi((state) => state.setOpenaiModelName)
+	const setMaxToken = useChatApi((state) => state.setMaxToken)
+	const messageApi = useStates((state) => state.messageApi)
 	const [form] = Form.useForm()
 	const [openaiModelNameModified, setOpenaiModelNameModified] = useState(false)
 	const [openaiApiKeyModified, setOpenaiApiKeyModified] = useState(false)

@@ -17,37 +17,41 @@ import {
 import { Button, Form, Input, Popconfirm, Popover, Space, Tooltip } from 'antd'
 
 export function ConfigCloud() {
-	const { messageApi, disabled, setDisabled } = useStates()
-	const {
-		s3Endpoint,
-		s3AccessKey,
-		s3SecretKey,
-		s3BucketName,
-		s3ConfigKey,
-		setS3Endpoint,
-		setS3AccessKey,
-		setS3SecretKey,
-		setS3BucketName,
-		setS3ConfigKey,
-		putToS3,
-		getFromS3,
-	} = usePlugins()
-	const {
-		openaiEndpoint,
-		openaiApiKey,
-		openaiModelName,
-		setOpenaiEndpoint,
-		setOpenaiApiKey,
-		setOpenaiModelName,
-	} = useChatApi()
-	const {
-		fishSpeechEndpoint,
-		f5TtsEndpoint,
-		setFishSpeechEndpoint,
-		setF5TtsEndpoint,
-	} = useSpeakApi()
-	const { jinaApiKey, jinaEndpoint, setJinaApiKey, setJinaEndpoint } =
-		useVectorApi()
+	const messageApi = useStates((state) => state.messageApi)
+	const disabled = useStates((state) => state.disabled)
+	const setDisabled = useStates((state) => state.setDisabled)
+
+	const s3Endpoint = usePlugins((state) => state.s3Endpoint)
+	const s3AccessKey = usePlugins((state) => state.s3AccessKey)
+	const s3SecretKey = usePlugins((state) => state.s3SecretKey)
+	const s3BucketName = usePlugins((state) => state.s3BucketName)
+	const s3ConfigKey = usePlugins((state) => state.s3ConfigKey)
+	const setS3Endpoint = usePlugins((state) => state.setS3Endpoint)
+	const setS3AccessKey = usePlugins((state) => state.setS3AccessKey)
+	const setS3SecretKey = usePlugins((state) => state.setS3SecretKey)
+	const setS3BucketName = usePlugins((state) => state.setS3BucketName)
+	const setS3ConfigKey = usePlugins((state) => state.setS3ConfigKey)
+	const putToS3 = usePlugins((state) => state.putToS3)
+	const getFromS3 = usePlugins((state) => state.getFromS3)
+
+	const openaiEndpoint = useChatApi((state) => state.openaiEndpoint)
+	const openaiApiKey = useChatApi((state) => state.openaiApiKey)
+	const openaiModelName = useChatApi((state) => state.openaiModelName)
+	const setOpenaiEndpoint = useChatApi((state) => state.setOpenaiEndpoint)
+	const setOpenaiApiKey = useChatApi((state) => state.setOpenaiApiKey)
+	const setOpenaiModelName = useChatApi((state) => state.setOpenaiModelName)
+
+	const fishSpeechEndpoint = useSpeakApi((state) => state.fishSpeechEndpoint)
+	const f5TtsEndpoint = useSpeakApi((state) => state.f5TtsEndpoint)
+	const setFishSpeechEndpoint = useSpeakApi(
+		(state) => state.setFishSpeechEndpoint,
+	)
+	const setF5TtsEndpoint = useSpeakApi((state) => state.setF5TtsEndpoint)
+
+	const jinaApiKey = useVectorApi((state) => state.jinaApiKey)
+	const jinaEndpoint = useVectorApi((state) => state.jinaEndpoint)
+	const setJinaApiKey = useVectorApi((state) => state.setJinaApiKey)
+	const setJinaEndpoint = useVectorApi((state) => state.setJinaEndpoint)
 
 	const [form] = Form.useForm()
 	const [s3EndpointModified, setS3EndpointModified] = useState(false)

@@ -7,9 +7,10 @@ import { DeleteOutlined, SaveOutlined } from '@ant-design/icons'
 import { Button, Form, Input, Space, Tooltip } from 'antd'
 
 export function ConfigPlugins() {
-	const { messageApi } = useStates()
-	const { selfName } = useMemory()
-	const { qWeatherApiKey, setQWeatherApiKey } = usePlugins()
+	const messageApi = useStates((state) => state.messageApi)
+	const selfName = useMemory((state) => state.selfName)
+	const qWeatherApiKey = usePlugins((state) => state.qWeatherApiKey)
+	const setQWeatherApiKey = usePlugins((state) => state.setQWeatherApiKey)
 	const [form] = Form.useForm()
 	const [qWeatherApiKeyModified, setQWeatherApiKeyModified] = useState(false)
 	useEffect(

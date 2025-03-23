@@ -52,19 +52,23 @@ const PAGES: Record<string, ReactNode> = {
 }
 
 export default function App() {
+	const setMessageApi = useStates((state) => state.setMessageApi)
+	const disabled = useStates((state) => state.disabled)
+	const forceAllowNav = useStates((state) => state.forceAllowNav)
+
+	const setLive2dOpen = useLive2dApi((state) => state.setLive2dOpen)
+	const background = useLive2dApi((state) => state.background)
+	const isFullScreen = useLive2dApi((state) => state.isFullScreen)
+	const live2dPositionY = useLive2dApi((state) => state.live2dPositionY)
+	const live2dPositionX = useLive2dApi((state) => state.live2dPositionX)
+	const setTips = useLive2dApi((state) => state.setTips)
+	const showTips = useLive2dApi((state) => state.showTips)
+	const hideTips = useLive2dApi((state) => state.hideTips)
+
+	const selfName = useMemory((state) => state.selfName)
+	const userName = useMemory((state) => state.userName)
+
 	const [messageApi, messageElement] = message.useMessage()
-	const { setMessageApi, disabled, forceAllowNav } = useStates()
-	const {
-		setLive2dOpen,
-		background,
-		isFullScreen,
-		live2dPositionY,
-		live2dPositionX,
-		setTips,
-		showTips,
-		hideTips,
-	} = useLive2dApi()
-	const { selfName, userName } = useMemory()
 	const [current, setCurrent] = useState<string>(DEFAULT_PAGE)
 	const isMobile = useIsMobile()
 
