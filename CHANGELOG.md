@@ -2,6 +2,45 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.0.0](https://github.com/LeafYeeXYZ/DigitalLife/compare/v1.4.1...v2.0.0) (2025-04-30)
+
+
+### ⚠ BREAKING CHANGES
+
+* 重构记忆架构
+
+### Features
+
+* 模型的显示名称将和数字生命名字匹配 ([9b24be2](https://github.com/LeafYeeXYZ/DigitalLife/commit/9b24be258614b667617a4e7aebd1456b940b9dcd))
+* 实现自定义的 live2d 模型对话框 ([f0bebc9](https://github.com/LeafYeeXYZ/DigitalLife/commit/f0bebc919997869bf1100cb57fc3f012416817ee))
+* 使用 biome 代替 prettier 和 eslint 并新增数项运行时类型检查 ([cf07b7c](https://github.com/LeafYeeXYZ/DigitalLife/commit/cf07b7c0c1edcc41eeb634841e72eb47ac3457a7))
+* 现在可以删除指定长时记忆 ([69db82b](https://github.com/LeafYeeXYZ/DigitalLife/commit/69db82bef3da15be74f509314f30e23c06e7fed8))
+* 新增两个 live2d 模型 ([56c64bc](https://github.com/LeafYeeXYZ/DigitalLife/commit/56c64bc7ae25ed781f22311a8bb2cba1c2f28c12))
+* 优化 Live2d 加载逻辑并新增欢迎消息 ([94be79f](https://github.com/LeafYeeXYZ/DigitalLife/commit/94be79f757f53890858ddde3462a5bb423780762))
+* 支持自定义模型位置 ([23c5c34](https://github.com/LeafYeeXYZ/DigitalLife/commit/23c5c34b27cdd1e630d7f91a2453a7769df92750))
+
+
+### Bug Fixes
+
+* 修复模型未清理的问题 ([0e70178](https://github.com/LeafYeeXYZ/DigitalLife/commit/0e70178e35f8a7ff37a980f84015de098cb3393f))
+* 修复消息框遮挡问题 ([cf5ede7](https://github.com/LeafYeeXYZ/DigitalLife/commit/cf5ede7f520b89423cafe682ff9bfa465cd675c2))
+* 修复一个错误的调用 ([b0ffc48](https://github.com/LeafYeeXYZ/DigitalLife/commit/b0ffc489d3c459bc5fa8d68701805ec7143013ed))
+
+
+### Refactoring
+
+* 不再检查模型ID ([84c898f](https://github.com/LeafYeeXYZ/DigitalLife/commit/84c898f3b1aed733bd2904d57b4bb23f687d045a))
+* 从 og-my-live2d 迁移到 l2d ([61266cd](https://github.com/LeafYeeXYZ/DigitalLife/commit/61266cd0eb8c629e4230ddf4c011c8a9246ee5b4))
+* 重构记忆架构 ([2d3b908](https://github.com/LeafYeeXYZ/DigitalLife/commit/2d3b90821bf1d139b384b0661eacb57889e097d4))
+
+
+### Improvements
+
+* 优化 live2d 对话框的标点显示 ([72be1e4](https://github.com/LeafYeeXYZ/DigitalLife/commit/72be1e4f0a13adb121f6f5fae535b66edb70ac07))
+* 优化部分确认弹窗描述 ([cb2c058](https://github.com/LeafYeeXYZ/DigitalLife/commit/cb2c0582c7288327cbabfb78aa21958163658a04))
+* 优化调试组件 ([e6e24cf](https://github.com/LeafYeeXYZ/DigitalLife/commit/e6e24cfd3b122e9bd5e95260e404442878045d0f))
+* 优化全局状态使用, 减少重新渲染 ([9a2d5cc](https://github.com/LeafYeeXYZ/DigitalLife/commit/9a2d5ccf32955f94612e8c95a954fe8859b89ac5))
+
 ## [1.4.1](https://github.com/LeafYeeXYZ/DigitalLife/compare/v1.4.0...v1.4.1) (2025-02-11)
 
 ### Features
