@@ -113,16 +113,13 @@ export const useChatApi = create<API>()((setState, getState) => ({
 		if (sessionStorage.getItem('openai_chat_test') === 'ok') {
 			return true
 		}
-		const { chat, openaiModelName } = getState()
-		const { data } = await chat.models.list().catch((err) => {
+		const { chat } = getState()
+		await chat.models.list().catch((err) => {
 			if (err.message === 'Connection error.') {
 				throw new Error('推理模型未启动')
 			}
 			throw err
 		})
-		if (data.every(({ id }) => id !== openaiModelName)) {
-			throw new Error(`当前服务缺少模型 ${openaiModelName}`)
-		}
 		sessionStorage.setItem('openai_chat_test', 'ok')
 		return true
 	},

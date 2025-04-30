@@ -30,7 +30,7 @@ const TOOLS: ChatCompletionTool[] = [
 		type: 'function',
 		function: {
 			name: 'get_memory',
-			description: '在记忆库中提取记忆',
+			description: '你可以调用中这个函数来在记忆库中提取记忆',
 			parameters: {
 				type: 'object',
 				properties: {
