@@ -98,13 +98,14 @@ export function MemoryAction() {
 						onOpenChange={setOpenDeleteMemory}
 						content={
 							<>
-								<Input
-									className='mb-3'
-									placeholder='请输入"删除所有记忆"后点击确定'
-									onChange={(e) => {
-										deleteMemoryText.current = e.target.value
-									}}
-								/>
+								<div className='mb-3'>
+									<Input
+										placeholder='请输入"删除所有记忆"后点击确定'
+										onChange={(e) => {
+											deleteMemoryText.current = e.target.value
+										}}
+									/>
+								</div>
 								<div className='flex justify-between items-center gap-3'>
 									<Button
 										block

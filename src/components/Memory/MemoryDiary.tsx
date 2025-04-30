@@ -25,7 +25,7 @@ export function MemoryDiary() {
 									label: (
 										<div className='grid grid-cols-[1fr_auto] gap-2'>
 											<div className='text-nowrap text-ellipsis overflow-hidden'>
-												{item.title}
+												{item.summary}
 											</div>
 											<div>
 												<Tooltip

@@ -6,25 +6,21 @@ declare type ShortTermMemory = {
 	role: string
 	content: string
 	timestamp: number
-	tool_calls?: import(
-		'openai/resources/index.mjs',
-	).ChatCompletionMessageToolCall[] // 出现于模型调用 (role === 'assistant')
+	tool_calls?: import('openai').OpenAI.ChatCompletionMessageToolCall[] // 出现于模型调用 (role === 'assistant')
 	tool_call_id?: string // 出现于模型调用结果 (role === 'tool')
 	recall?: { uuid: string; similarity: number; desc: string }[] // 出现于模型调用结果 (role === 'tool')
+	uuid: string
 }
 
 declare type LongTermMemory = {
 	uuid: string
 	startTime: number
 	endTime: number
-	title: string
 	summary: string
 	vector?: number[]
 }
 
-declare type ArchivedMemory = {
-	belongTo: string // uuid in long term memory
-} & ShortTermMemory
+declare type ArchivedMemory = ShortTermMemory
 
 declare type ConfigKeys =
 	| 'default_live2d'
@@ -33,7 +29,6 @@ declare type ConfigKeys =
 	| 'default_speak_api'
 	| 'default_listen_api'
 	| 'last_used_token'
-	| 'model_max_tokens'
 	| 'background_image'
 	| 'qweather_api_key'
 	| 'f5_tts_endpoint'
@@ -62,7 +57,6 @@ declare type MemoryKeys =
 	| 'archived_memory'
 	| 'memory_about_self'
 	| 'memory_about_user'
-	| 'current_summary'
 
 declare type StoreKeys = ConfigKeys | MemoryKeys
 

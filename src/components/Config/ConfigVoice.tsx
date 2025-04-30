@@ -128,7 +128,7 @@ export function ConfigVoice() {
 							label: name,
 							value: name,
 						}))}
-						defaultValue={currentListenApi}
+						value={currentListenApi}
 						onChange={async (value) => {
 							await setListenApi(value)
 						}}

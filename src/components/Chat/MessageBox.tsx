@@ -15,7 +15,7 @@ import { useChatApi } from '../../lib/hooks/useChatApi.ts'
 import { useMemory } from '../../lib/hooks/useMemory.ts'
 import { useSpeakApi } from '../../lib/hooks/useSpeakApi.ts'
 import { useStates } from '../../lib/hooks/useStates.ts'
-import { getDate, uuid } from '../../lib/utils.ts'
+import { getDate } from '../../lib/utils.ts'
 
 const md = markdownit({ html: true, breaks: true })
 
@@ -31,7 +31,12 @@ export function MessageBox() {
 		if (memo.length !== 0 && memo[memo.length - 1].role !== 'assistant') {
 			return [
 				...memo,
-				{ role: 'assistant', content: '__loading__', timestamp: -1 },
+				{
+					role: 'assistant',
+					content: '__loading__',
+					timestamp: -1,
+					uuid: '__loading__',
+				},
 			]
 		}
 		return memo
@@ -49,7 +54,7 @@ export function MessageBox() {
 		<div className='w-full flex flex-col pr-[0.2rem] py-1'>
 			{memoryList.map((memo) => (
 				<BubbleX
-					key={uuid()}
+					key={memo.uuid}
 					memo={memo}
 					audio={
 						audiosCache.find(({ timestamp }) => timestamp === memo.timestamp)
@@ -170,26 +175,27 @@ function BubbleX({
 						<Popover
 							content={
 								<div className='flex flex-col gap-2'>
-									<div key={-1}>
-										{!memo.recall?.length
-											? '没能在记忆库中找到更多和相关的记忆'
-											: `在记忆库里找到了一些和"${memo.recall[0].desc}"相关的记忆`}
-									</div>
-									{memo.recall?.map((item) => {
-										const m = longTermMemory.find(
-											({ uuid }) => uuid === item.uuid,
-										)
-										if (!m) {
-											throw new Error('提取的记忆 uuid 在记忆库中不存在')
-										}
-										return (
-											<div key={uuid()} className='flex gap-2'>
-												<Tag color='blue'>{m.title}</Tag>
-												<Tag>{getDate(m.startTime)}</Tag>
-												<Tag>相似度: {item.similarity.toFixed(2)}</Tag>
-											</div>
-										)
-									})}
+									{memo.recall?.length ? (
+										<div>
+											{memo.recall?.map((item) => {
+												const m = longTermMemory.find(
+													({ uuid }) => uuid === item.uuid,
+												)
+												if (!m) {
+													throw new Error('提取的记忆 uuid 在记忆库中不存在')
+												}
+												return (
+													<div key={m.uuid} className='flex gap-2'>
+														<Tag color='blue'>{m.summary}</Tag>
+														<Tag>{getDate(m.startTime)}</Tag>
+														<Tag>相似度: {item.similarity.toFixed(2)}</Tag>
+													</div>
+												)
+											})}
+										</div>
+									) : (
+										'没有在记忆库中找到更多相关的记忆'
+									)}
 								</div>
 							}
 						>

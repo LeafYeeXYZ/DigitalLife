@@ -1,6 +1,6 @@
 import emojiReg from 'emoji-regex'
 import { flushSync } from 'react-dom'
-import { sleep } from '../../lib/utils.ts'
+import { sleep, uuid } from '../../lib/utils.ts'
 
 import { type RefObject, useEffect, useRef, useState } from 'react'
 import { useChatApi } from '../../lib/hooks/useChatApi.ts'
@@ -37,7 +37,6 @@ export function ChatText({
 	const usedToken = useChatApi((state) => state.usedToken)
 	const setUsedToken = useChatApi((state) => state.setUsedToken)
 	const openaiModelName = useChatApi((state) => state.openaiModelName)
-	const maxToken = useChatApi((state) => state.maxToken)
 	const addThinkCache = useChatApi((state) => state.addThinkCache)
 
 	const vectorApi = useVectorApi((state) => state.vectorApi)
@@ -56,18 +55,9 @@ export function ChatText({
 	const shortTermMemory = useMemory((state) => state.shortTermMemory)
 	const setShortTermMemory = useMemory((state) => state.setShortTermMemory)
 	const selfName = useMemory((state) => state.selfName)
-	const setCurrentSummary = useMemory((state) => state.setCurrentSummary)
-	const updateCurrentSummary = useMemory((state) => state.updateCurrentSummary)
 	const [recognition, setRecognition] = useState<ReturnType<ListenApi> | null>(
 		null,
 	)
-
-	const [reduceMessage, setReduceMessage] = useState<number>(0)
-	useEffect(() => {
-		if (shortTermMemory.length === 0) {
-			setReduceMessage(0)
-		}
-	}, [shortTermMemory])
 
 	const senderRef = useRef<GetRef<typeof Sender>>(null)
 	useEffect(() => {
@@ -94,19 +84,17 @@ export function ChatText({
 		const prev = shortTermMemoryRef.current
 		const time = Date.now()
 		try {
-			const input = [...prev, { role: 'user', content: text, timestamp: time }]
+			const input = [
+				...prev,
+				{ role: 'user', content: text, timestamp: time, uuid: uuid() },
+			]
 			await setShortTermMemory(input)
 			setTips('......')
 			showTips()
-			const {
-				result,
-				tokens,
-				output: o,
-				think,
-			} = await chatWithMemory(
+			const { result, tokens, output, think } = await chatWithMemory(
 				chat,
 				openaiModelName,
-				input.slice(reduceMessage),
+				input,
 				async (input) => {
 					let vec: number[] | undefined = undefined
 					try {
@@ -121,14 +109,6 @@ export function ChatText({
 			if (think) {
 				await addThinkCache({ timestamp: time, content: think })
 			}
-			const output = [...input.slice(0, reduceMessage), ...o]
-			const updateSummary = updateCurrentSummary(
-				chat,
-				openaiModelName,
-				output.filter(
-					(out) => !prev.some((p) => p.timestamp === out.timestamp),
-				),
-			)
 			await setUsedToken(tokens)
 			const reg = /。|？|！|,|，|;|；|~|～|!|\?|\. |…|\n|\r|\r\n|:|：|……/
 			const emoji = emojiReg()
@@ -151,7 +131,12 @@ export function ChatText({
 				current += w
 				await setShortTermMemory([
 					...output,
-					{ role: 'assistant', content: current, timestamp: time },
+					{
+						role: 'assistant',
+						content: current,
+						timestamp: time,
+						uuid: uuid(),
+					},
 				])
 				await sleep(30)
 				if (w.match(reg)) {
@@ -171,28 +156,7 @@ export function ChatText({
 					</p>,
 				),
 			)
-			const r = await updateSummary
-			await setCurrentSummary(r.result)
-			const currentTokens = Math.max(tokens, r.tokens)
-			const pressure = currentTokens / maxToken
-			if (pressure > 0.95) {
-				setReduceMessage((prev) => prev + 4)
-			} else if (pressure > 0.9) {
-				setReduceMessage((prev) => prev + 3)
-			} else if (pressure > 0.85) {
-				setReduceMessage((prev) => prev + 2)
-			} else if (pressure > 0.8) {
-				setReduceMessage((prev) => prev + 1)
-			} else if (pressure > 0.75) {
-				setReduceMessage((prev) => prev + 0)
-			} else if (pressure > 0.7) {
-				setReduceMessage((prev) => Math.max(prev - 1, 0))
-			} else if (pressure > 0.65) {
-				setReduceMessage((prev) => Math.max(prev - 2, 0))
-			} else if (pressure > 0.6) {
-				setReduceMessage((prev) => Math.max(prev - 3, 0))
-			}
-			await setUsedToken(currentTokens)
+			await setUsedToken(tokens)
 			flushSync(() =>
 				setDisabled(
 					<p className='flex justify-center items-center gap-[0.3rem]'>
@@ -203,7 +167,7 @@ export function ChatText({
 			await tts
 			const newMemory = [
 				...output,
-				{ role: 'assistant', content: result, timestamp: time },
+				{ role: 'assistant', content: result, timestamp: time, uuid: uuid() },
 			]
 			await setShortTermMemory(newMemory)
 			shortTermMemoryRef.current = newMemory
@@ -251,20 +215,15 @@ export function ChatText({
 											</p>,
 										),
 									)
-									const { tokens } = await updateMemory(
-										chat,
-										openaiModelName,
-										async (input) => {
-											let vec: number[] | undefined = undefined
-											try {
-												vec = await vectorApi(input)
-											} catch {
-												messageApi?.warning('记忆索引失败, 请稍后手动索引')
-											}
-											return vec
-										},
-									)
-									await setUsedToken(tokens)
+									await updateMemory(chat, openaiModelName, async (input) => {
+										let vec: number[] | undefined = undefined
+										try {
+											vec = await vectorApi(input)
+										} catch {
+											messageApi?.warning('记忆索引失败, 请稍后手动索引')
+										}
+										return vec
+									})
 									shortTermMemoryRef.current = []
 									messageApi?.success('记忆更新成功')
 									setInputValue('')
@@ -307,7 +266,6 @@ export function ChatText({
 										),
 									)
 									await setShortTermMemory([])
-									await setCurrentSummary('')
 									await setUsedToken(undefined)
 									shortTermMemoryRef.current = []
 									messageApi?.success('对话已清除')
@@ -332,38 +290,17 @@ export function ChatText({
 							</Button>
 						</Popconfirm>
 						{typeof usedToken === 'number' && usedToken > 0 && (
-							<Popover
-								title='记忆负荷'
-								content={
-									<div className='flex flex-col gap-1'>
-										<div>
-											上次词元用量: {usedToken} / {maxToken}
-										</div>
-										<div>
-											下次消息输入: {shortTermMemory.length - reduceMessage} /{' '}
-											{shortTermMemory.length}
-										</div>
-									</div>
-								}
-							>
+							<Popover content={`上次词元用量: ${usedToken}`}>
 								<Button
 									size='small'
 									icon={<DashboardOutlined />}
 									disabled={disabled !== false}
-								>
-									<span className='text-xs'>
-										{((usedToken / maxToken) * 100).toFixed(0)}%
-									</span>
-								</Button>
+								/>
 							</Popover>
 						)}
 					</div>
 				}
 				onSubmit={async () => {
-					if (usedToken && usedToken >= maxToken) {
-						messageApi?.error('记忆负荷过大, 请先更新记忆')
-						return
-					}
 					const text = inputValue.trim()
 					if (!text) {
 						messageApi?.warning('请输入内容')

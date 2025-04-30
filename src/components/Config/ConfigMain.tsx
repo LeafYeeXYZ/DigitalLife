@@ -1,5 +1,5 @@
 import { ReloadOutlined, SaveOutlined } from '@ant-design/icons'
-import { Button, Form, Input, InputNumber, Space, Tag, Tooltip } from 'antd'
+import { Button, Form, Input, Space, Tag, Tooltip } from 'antd'
 import { useEffect, useState } from 'react'
 import { useChatApi } from '../../lib/hooks/useChatApi.ts'
 import { useStates } from '../../lib/hooks/useStates.ts'
@@ -8,17 +8,14 @@ export function ConfigMain() {
 	const openaiEndpoint = useChatApi((state) => state.openaiEndpoint)
 	const openaiApiKey = useChatApi((state) => state.openaiApiKey)
 	const openaiModelName = useChatApi((state) => state.openaiModelName)
-	const maxToken = useChatApi((state) => state.maxToken)
 	const setOpenaiEndpoint = useChatApi((state) => state.setOpenaiEndpoint)
 	const setOpenaiApiKey = useChatApi((state) => state.setOpenaiApiKey)
 	const setOpenaiModelName = useChatApi((state) => state.setOpenaiModelName)
-	const setMaxToken = useChatApi((state) => state.setMaxToken)
 	const messageApi = useStates((state) => state.messageApi)
 	const [form] = Form.useForm()
 	const [openaiModelNameModified, setOpenaiModelNameModified] = useState(false)
 	const [openaiApiKeyModified, setOpenaiApiKeyModified] = useState(false)
 	const [openaiEndpointModified, setOpenaiEndpointModified] = useState(false)
-	const [maxTokenModified, setMaxTokenModified] = useState(false)
 	useEffect(
 		() => form.setFieldsValue({ openaiModelName }),
 		[openaiModelName, form],
@@ -28,7 +25,6 @@ export function ConfigMain() {
 		() => form.setFieldsValue({ openaiEndpoint }),
 		[openaiEndpoint, form],
 	)
-	useEffect(() => form.setFieldsValue({ maxToken }), [maxToken, form])
 
 	return (
 		<div className='w-full bg-white border border-blue-900 rounded-md px-5 pb-0 pt-4 overflow-auto max-h-full'>
@@ -155,43 +151,6 @@ export function ConfigMain() {
 									await setOpenaiModelName(model)
 									setOpenaiModelNameModified(false)
 									messageApi?.success('推理服务模型已更新')
-								}}
-								icon={<SaveOutlined />}
-							/>
-						</Tooltip>
-					</Space.Compact>
-				</Form.Item>
-				<Form.Item label='推理模型最大 Token 数'>
-					<Space.Compact block>
-						<Tooltip title='恢复默认值' color='blue'>
-							<Button
-								type='default'
-								autoInsertSpace={false}
-								icon={<ReloadOutlined />}
-								onClick={async () => {
-									await setMaxToken()
-									setMaxTokenModified(false)
-									messageApi?.success('推理模型最大 Token 数已恢复默认值')
-								}}
-							/>
-						</Tooltip>
-						<Form.Item noStyle name='maxToken'>
-							<InputNumber
-								style={{ width: '100%' }}
-								onChange={() => setMaxTokenModified(true)}
-								min={3_000}
-								max={120_000}
-								step={1_000}
-							/>
-						</Form.Item>
-						<Tooltip title='保存修改' color='blue'>
-							<Button
-								type={maxTokenModified ? 'primary' : 'default'}
-								autoInsertSpace={false}
-								onClick={async () => {
-									await setMaxToken(Number(form.getFieldValue('maxToken')))
-									setMaxTokenModified(false)
-									messageApi?.success('推理模型最大 Token 数已更新')
 								}}
 								icon={<SaveOutlined />}
 							/>

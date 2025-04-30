@@ -5,8 +5,6 @@ import { get, set } from '../utils.ts'
 type API = {
 	chat: ChatApi
 	testChat: ChatApiTest
-	maxToken: number
-	setMaxToken: (token?: number) => Promise<void>
 	openaiEndpoint: string
 	setOpenaiEndpoint: (url?: string) => Promise<void>
 	openaiApiKey: string
@@ -26,18 +24,13 @@ type API = {
 	}) => Promise<void>
 }
 
-const DEFAULT_MAX_TOKEN = 8_000
 const DEFAULT_OPENAI_ENDPOINT = 'http://localhost:11434/v1/'
 const DEFAULT_OPENAI_API_KEY = 'ollama'
 const DEFAULT_OPENAI_MODEL_NAME = 'qwen2.5:7b'
 
 const localUsedToken = await get('last_used_token')
-const localMaxToken = await get('model_max_tokens')
 const localThinkCache = await get('think_cache')
 const defaultUsedToken = localUsedToken ? Number(localUsedToken) : -1
-const defaultMaxToken = localMaxToken
-	? Number(localMaxToken)
-	: DEFAULT_MAX_TOKEN
 const defaultOpenaiEndpoint =
 	(await get('openai_endpoint')) ?? DEFAULT_OPENAI_ENDPOINT
 const defaultOpenaiApiKey =
@@ -122,12 +115,5 @@ export const useChatApi = create<API>()((setState, getState) => ({
 		})
 		sessionStorage.setItem('openai_chat_test', 'ok')
 		return true
-	},
-	maxToken: defaultMaxToken,
-	setMaxToken: async (token) => {
-		const v = token ?? DEFAULT_MAX_TOKEN
-		setState({ maxToken: v })
-		await set('model_max_tokens', v.toString())
-		return
 	},
 }))

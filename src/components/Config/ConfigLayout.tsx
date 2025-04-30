@@ -28,7 +28,7 @@ export function ConfigLayout() {
 							label: name.replace('{name}', selfName),
 							value: name,
 						}))}
-						defaultValue={live2dName}
+						value={live2dName}
 						onChange={async (value) => {
 							await setLoadLive2d(value)
 						}}
@@ -41,7 +41,7 @@ export function ConfigLayout() {
 						min={-300}
 						max={300}
 						step={5}
-						defaultValue={live2dPositionY}
+						value={live2dPositionY}
 						onChange={(value) => {
 							setLive2dPositionY(value)
 						}}
@@ -54,7 +54,7 @@ export function ConfigLayout() {
 						min={-600}
 						max={600}
 						step={10}
-						defaultValue={live2dPositionX}
+						value={live2dPositionX}
 						onChange={(value) => {
 							setLive2dPositionX(value)
 						}}
@@ -105,7 +105,7 @@ export function ConfigLayout() {
 							{ label: '全屏', value: true },
 							{ label: '模型区域', value: false },
 						]}
-						defaultValue={isFullScreen}
+						value={isFullScreen}
 						onChange={async (value) => {
 							await setIsFullScreen(value)
 						}}
